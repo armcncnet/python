@@ -13,7 +13,7 @@
 > 安装相关依赖
 
 ```shell
-pip3 install robotchain colorlog websocket-client==0.48.0 requests pyserial roslibpy empy colcon-common-extensions pymongo tornado
+pip3 install armcnc websocket-client==0.48.0 requests pyserial
 ```
 
 ## 📖 Using templates
