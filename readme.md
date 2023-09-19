@@ -1,4 +1,4 @@
-# 🤖 Python Framework SDK
+# 🛠️ Python Framework SDK
 
 ⚡ Python development framework for armcnc. ⚡
 
