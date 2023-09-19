@@ -1,0 +1,7 @@
+.idea
+.DS*
+.git
+.vscode
+build
+dist
+armcnc.egg-info
