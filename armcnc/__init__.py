@@ -1,6 +1,6 @@
 import sys
 import signal
-import app as app_file
+import launch as launch_file
 
 class Init:
 
@@ -11,12 +11,12 @@ class Init:
 
     def setup(self):
         framework_start = "framework_start"
-        if framework_start in dir(app_file):
-            getattr(app_file, framework_start)(self)
+        if framework_start in dir(launch_file):
+            getattr(launch_file, framework_start)(self)
         self.sigint_handler(False, False)
 
     def sigint_handler(self, signum, frame):
         framework_exit = "framework_exit"
-        if framework_exit in dir(app_file):
-            getattr(app_file, framework_exit)(self)
+        if framework_exit in dir(launch_file):
+            getattr(launch_file, framework_exit)(self)
         sys.exit()
