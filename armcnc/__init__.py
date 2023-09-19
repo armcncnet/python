@@ -1,5 +1,12 @@
+"""
+******************************************************************************
+* @author  ARMCNC site:www.armcnc.net github:armcnc.github.io
+******************************************************************************
+"""
+
 import sys
 import signal
+from .linuxcnc import LinuxCNC
 import launch as launch_file
 
 class Init:
@@ -7,6 +14,7 @@ class Init:
     def __init__(self):
         signal.signal(signal.SIGINT, self.sigint_handler)
         signal.signal(signal.SIGTERM, self.sigint_handler)
+        self.armcnc = LinuxCNC(self)
         self.setup()
 
     def setup(self):
