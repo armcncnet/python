@@ -24,7 +24,7 @@ pip3 install robotchain colorlog websocket-client==0.48.0 requests pyserial rosl
 
 import armcnc as framework
 
-def framework_start(sdk):
+def framework_start(cnc):
     pass
 
 if __name__ == '__main__':
