@@ -9,4 +9,4 @@ import linuxcnc
 class Error:
 
     def __init__(self):
-        self.apis = linuxcnc.command()
+        self.api = linuxcnc.command()

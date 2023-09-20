@@ -9,4 +9,4 @@ import linuxcnc
 class Statistics:
 
     def __init__(self):
-        self.apis = linuxcnc.stat()
+        self.api = linuxcnc.stat()
