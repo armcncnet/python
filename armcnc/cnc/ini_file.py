@@ -6,7 +6,7 @@
 
 import linuxcnc
 
-class IniFile:
+class INIFile:
 
     def __init__(self):
         self.linuxcnc = linuxcnc
