@@ -6,7 +6,7 @@
 
 import linuxcnc
 
-class Statistics:
+class Status:
 
     def __init__(self):
         self.api = linuxcnc.stat()

@@ -9,4 +9,5 @@ import linuxcnc
 class Command:
 
     def __init__(self):
-        self.api = linuxcnc.error_channel()
+        self.linuxcnc = linuxcnc
+        self.api = self.linuxcnc.error_channel()
