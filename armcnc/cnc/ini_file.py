@@ -6,8 +6,7 @@
 
 import linuxcnc
 
-class Error:
+class IniFile:
 
     def __init__(self):
         self.linuxcnc = linuxcnc
-        self.api = self.linuxcnc.command()

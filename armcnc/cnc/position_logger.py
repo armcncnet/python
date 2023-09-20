@@ -6,7 +6,7 @@
 
 import linuxcnc
 
-class Logger:
+class PositionLogger:
 
     def __init__(self):
         self.linuxcnc = linuxcnc

@@ -6,8 +6,9 @@
 
 from .status import Status
 from .command import Command
-from .logger import Logger
-from .error import Error
+from .ini_file import IniFile
+from .position_logger import PositionLogger
+from .error_channel import ErrorChannel
 
 class CNC:
 
@@ -15,5 +16,6 @@ class CNC:
         self.framework = framework
         self.stat = Status()
         self.command = Command()
-        self.logger = Logger()
-        self.error = Error()
+        self.ini_file = IniFile()
+        self.position_logger = PositionLogger()
+        self.error_channel = ErrorChannel()

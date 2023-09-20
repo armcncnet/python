@@ -6,15 +6,8 @@
 
 import linuxcnc
 
-class Status:
+class ErrorChannel:
 
     def __init__(self):
         self.linuxcnc = linuxcnc
-        self.api = self.linuxcnc.stat()
-        self.data = None
-
-    def status_work(self):
-        pass
-
-    def poll(self):
-        self.api.poll()
+        self.api = self.linuxcnc.error_channel()
