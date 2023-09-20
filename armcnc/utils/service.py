@@ -28,7 +28,7 @@ class Service:
         self.socket.on_open = self.service_open
         self.socket.run_forever()
 
-    def service_open(self):
+    def service_open(self, ws):
         self.status = True
         self.utils.log.info("service_open")
 
@@ -47,7 +47,7 @@ class Service:
         self.status = False
         self.utils.log.error("service_error")
 
-    def service_close(self):
+    def service_close(self, ws):
         self.socket = None
         self.status = False
         self.utils.log.error("service_close")
