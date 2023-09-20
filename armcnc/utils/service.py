@@ -6,7 +6,6 @@
 
 import websocket
 import threading
-import json
 
 class Service:
 
@@ -35,11 +34,11 @@ class Service:
 
     def service_write(self, message):
         if self.socket is not None and self.status:
-            self.socket.send(json.dumps(message))
+            self.socket.send(self.utils.json.dumps(message))
 
     def service_message(self, ws, message):
         if self.socket is not None and self.status:
-            message_json = json.loads(message)
+            message_json = self.utils.json.loads(message)
             if message_json["command"]:
                 self.utils.framework.message_handle(message_json)
 

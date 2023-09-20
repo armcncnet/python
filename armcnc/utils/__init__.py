@@ -4,6 +4,7 @@
 ******************************************************************************
 """
 import time
+import json
 from .service import Service
 from .log import Log
 
@@ -14,6 +15,7 @@ class Utils:
         self.service = Service(self)
         self.log = Log(self)
         self.time = time
+        self.json = json
 
     def get_service_status(self):
         return self.service.status
