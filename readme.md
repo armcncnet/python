@@ -22,9 +22,13 @@ pip3 install armcnc websocket-client==0.48.0 requests pyserial
 
 import armcnc as framework
 
-def framework_start(cnc):
-    pass
+def armcnc_start(cnc):
+    while True:
+        pass
 
+def armcnc_exit(cnc):
+        pass
+    
 if __name__ == '__main__':
     framework_sdk = framework.Init()
 ```
