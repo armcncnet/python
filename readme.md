@@ -26,6 +26,9 @@ def armcnc_start(cnc):
     while True:
         pass
 
+def armcnc_message(cnc, message):
+    pass
+    
 def armcnc_exit(cnc):
         pass
     

@@ -7,7 +7,7 @@
 import sys
 import signal
 from .utils import Utils
-from .linuxcnc import LinuxCNC
+from .cnc import CNC
 import launch as launch_file
 
 class Init:
@@ -16,10 +16,10 @@ class Init:
         signal.signal(signal.SIGINT, self.signal_handler)
         signal.signal(signal.SIGTERM, self.signal_handler)
         self.utils = Utils(self)
-        self.armcnc = LinuxCNC(self)
-        self.setup()
+        self.armcnc = CNC(self)
+        self.start()
 
-    def setup(self):
+    def start(self):
         armcnc_start = "armcnc_start"
         if armcnc_start in dir(launch_file):
             getattr(launch_file, armcnc_start)(self)
@@ -27,7 +27,9 @@ class Init:
 
     def message_handle(self, message):
         if self.armcnc and message["command"]:
-            pass
+            armcnc_message = "armcnc_message"
+            if armcnc_message in dir(launch_file):
+                getattr(launch_file, armcnc_message)(self, message)
 
     def signal_handler(self, signum, frame):
         armcnc_exit = "armcnc_exit"

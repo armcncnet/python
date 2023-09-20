@@ -6,9 +6,7 @@
 
 import linuxcnc
 
-class LinuxCNC:
+class Statistics:
 
-    def __init__(self, framework):
-        self.framework = framework
-        self.linuxcnc = linuxcnc
-
+    def __init__(self):
+        self.apis = linuxcnc.stat()
