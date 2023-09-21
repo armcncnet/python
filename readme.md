@@ -11,7 +11,7 @@
 > 安装相关依赖
 
 ```shell
-pip3 install armcnc websocket-client==0.48.0 requests pyserial
+pip3 install armcnc websocket-client==0.48.0 requests pyserial colorlog
 ```
 
 ## 📖 Using templates
@@ -39,24 +39,18 @@ if __name__ == '__main__':
 ## 📖 Development
 
 > 安装相关依赖
->
-> Install the required dependencies.
 
 ```shell
 pip3 install twine setuptools wheel
 ```
 
 > 构建软件包
->
-> Build software package.
 
 ```shell
 python3 setup.py sdist bdist_wheel
 ```
 
 > 上传软件包到PyPI
->
-> Upload software package to PyPI.
 
 ```shell
 twine upload dist/*
