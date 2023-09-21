@@ -1,9 +1,3 @@
-"""
-******************************************************************************
-* @author  ARMCNC site:www.armcnc.net github:armcnc.github.io
-******************************************************************************
-"""
-
 from .status import Status
 from .command import Command
 from .ini_file import INIFile
