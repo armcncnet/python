@@ -11,3 +11,5 @@ class CNC:
         self.command = Command()
         self.ini_file = INIFile()
         self.error_channel = ErrorChannel()
+
+    
