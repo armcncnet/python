@@ -12,4 +12,5 @@ class CNC:
         self.ini_file = INIFile()
         self.error_channel = ErrorChannel()
 
-    
+    def start(self):
+        pass
