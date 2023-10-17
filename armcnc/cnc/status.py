@@ -20,6 +20,9 @@ class Status:
     def task(self):
         while True:
             if self.framework.machine.is_alive:
-                status = self.api.poll()
-                print(status)
+                try:
+                    status = self.api.poll()
+                    print(status)
+                except linuxcnc.error as detail:
+                    self.framework.utils.service.service_write({"command": "launch:error", "message": detail, "data": False})
             self.framework.utils.set_sleep(0.1)
