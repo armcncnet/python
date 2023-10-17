@@ -15,10 +15,11 @@ class CNC:
 
     def __init__(self, framework):
         self.framework = framework
-        self.status = None
-        self.command = None
-        self.ini = None
-        self.error = None
+        self.is_start = False
+        self.status = Status(self.framework)
+        self.command = Command(self.framework)
+        self.ini = Ini(self.framework)
+        self.error = Error(self.framework)
 
     def start(self):
         linuxcnc_pid = subprocess.Popen(["pidof", "-x", "linuxcnc"], stdout=subprocess.PIPE)
@@ -26,8 +27,4 @@ class CNC:
         if len(linuxcnc_pid_result) == 0:
             linuxcnc_start = "sudo -u " + self.framework.machine.user + " linuxcnc" + sys.argv[1]
             subprocess.Popen(linuxcnc_start, stderr=subprocess.STDOUT, shell=True)
-
-        self.status = Status(self.framework)
-        self.command = Command(self.framework)
-        self.ini = Ini(self.framework)
-        self.error = Error(self.framework)
+        self.is_start = True
