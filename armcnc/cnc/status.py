@@ -19,7 +19,7 @@ class Status:
 
     def task(self):
         while True:
-            if self.framework.is_start:
+            if self.framework.machine.is_alive:
                 status = self.api.poll()
                 print(status)
             self.framework.utils.set_sleep(0.1)

@@ -19,7 +19,7 @@ class Error:
 
     def task(self):
         while True:
-            if self.framework.is_start:
+            if self.framework.machine.is_alive:
                 error = self.api.poll()
                 if error:
                     kind, text = error
