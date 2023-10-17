@@ -8,7 +8,8 @@ import linuxcnc
 
 class Status:
 
-    def __init__(self):
+    def __init__(self, framework):
+        self.framework = framework
         self.linuxcnc = linuxcnc
         self.api = self.linuxcnc.stat()
         self.data = None

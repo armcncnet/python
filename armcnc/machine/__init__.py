@@ -4,11 +4,7 @@
 ******************************************************************************
 """
 
-import linuxcnc
-
-class INIFile:
+class Machine:
 
     def __init__(self, framework):
         self.framework = framework
-        self.linuxcnc = linuxcnc
-

@@ -6,8 +6,10 @@
 
 import sys
 import signal
+import subprocess
 from .utils import Utils
 from .cnc import CNC
+from .machine import Machine
 import launch as launch_file
 
 class Init:
@@ -16,10 +18,21 @@ class Init:
         signal.signal(signal.SIGINT, self.signal_handler)
         signal.signal(signal.SIGTERM, self.signal_handler)
         self.utils = Utils(self)
+        self.machine = Machine(self)
         self.armcnc = CNC(self)
         self.start()
 
     def start(self):
+        if len(sys.argv) != 2:
+            self.utils.log.error("Please specify the machine configuration file.")
+            sys.exit(1)
+
+        linuxcnc_pid = subprocess.Popen(["pidof", "-x", "linuxcnc"], stdout=subprocess.PIPE)
+        linuxcnc_pid_result = linuxcnc_pid.communicate()[0]
+        if len(linuxcnc_pid_result) > 0:
+            self.utils.log.error("System detected to be running.")
+            sys.exit(1)
+
         armcnc_start = "armcnc_start"
         if armcnc_start in dir(launch_file):
             self.armcnc.start()
