@@ -27,9 +27,7 @@ class CNC:
             linuxcnc_start = "sudo -u " + self.framework.machine.user + " linuxcnc" + sys.argv[1]
             subprocess.Popen(linuxcnc_start, stderr=subprocess.STDOUT, shell=True)
 
-            self.status = Status(self.framework)
-            self.command = Command(self.framework)
-            self.ini = Ini(self.framework)
-            self.error = Error(self.framework)
-
-
+        self.status = Status(self.framework)
+        self.command = Command(self.framework)
+        self.ini = Ini(self.framework)
+        self.error = Error(self.framework)
