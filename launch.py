@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from armcnc import Init
+from .armcnc import Init
 
 # armcnc启动回调函数
 def armcnc_start(cnc):
