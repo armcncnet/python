@@ -16,6 +16,7 @@ class Init:
     def __init__(self):
         signal.signal(signal.SIGINT, self.signal_handler)
         signal.signal(signal.SIGTERM, self.signal_handler)
+        self.is_start = False
         self.utils = Utils(self)
         self.machine = Machine(self)
         self.armcnc = CNC(self)
