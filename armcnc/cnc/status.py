@@ -27,4 +27,4 @@ class Status:
                             print(x, getattr(status, x))
                 except linuxcnc.error as detail:
                     self.framework.utils.service.service_write({"command": "launch:error", "message": detail, "data": False})
-            self.framework.utils.set_sleep(0.1)
+            self.framework.utils.set_sleep(1)
