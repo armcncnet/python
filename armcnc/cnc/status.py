@@ -12,7 +12,7 @@ class Status:
     def __init__(self, framework):
         self.framework = framework
         self.linuxcnc = linuxcnc
-        self.api = self.linuxcnc.stat()
+        self.api = None
         self.task = threading.Thread(name="status_task", target=self.task)
         self.task.daemon = True
         self.task.start()
@@ -21,6 +21,7 @@ class Status:
         while True:
             if self.framework.machine.is_alive:
                 try:
+                    self.api = linuxcnc.stat()
                     status = self.api.poll()
                     print(status)
                     # print(status.ini_filename)
