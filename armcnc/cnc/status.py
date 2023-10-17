@@ -25,5 +25,5 @@ class Status:
                 except linuxcnc.error as detail:
                     self.framework.utils.service.service_write({"command": "launch:error", "message": detail, "data": False})
 
-                print(self.api.ini_filename)
-            self.framework.utils.set_sleep(0.01)
+                print(self.api)
+            self.framework.utils.set_sleep(5)
