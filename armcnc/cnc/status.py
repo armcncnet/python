@@ -12,20 +12,11 @@ class Status:
     def __init__(self, framework):
         self.framework = framework
         self.linuxcnc = linuxcnc
+        self.api = None
+
+    def test(self):
+        self.framework.utils.set_sleep(5)
         self.api = linuxcnc.stat()
-        self.data = None
-        self.task = threading.Thread(name="status_task", target=self.task)
-        self.task.daemon = True
-        self.task.start()
-
-    def task(self):
-        while True:
-            if self.framework.machine.is_alive:
-                try:
-                    self.data = self.api.poll()
-                except linuxcnc.error as detail:
-                    self.framework.utils.service.service_write({"command": "launch:error", "message": detail, "data": False})
-
-                print(self.data)
-
-            self.framework.utils.set_sleep(10)
+        cnc_stat = self.api.poll()
+        file = getattr(cnc_stat, "file")
+        print("-->", file)
