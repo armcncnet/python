@@ -6,7 +6,7 @@
 
 import linuxcnc
 
-class INIFile:
+class Ini:
 
     def __init__(self, framework):
         self.framework = framework

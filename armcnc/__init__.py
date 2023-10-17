@@ -6,7 +6,6 @@
 
 import sys
 import signal
-import subprocess
 from .utils import Utils
 from .cnc import CNC
 from .machine import Machine

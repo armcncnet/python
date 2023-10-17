@@ -14,7 +14,7 @@ class Status:
         self.api = self.linuxcnc.stat()
         self.data = None
 
-    def status_work(self):
+    def work(self):
         pass
 
     def poll(self):
