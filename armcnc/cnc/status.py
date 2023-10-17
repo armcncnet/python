@@ -20,5 +20,5 @@ class Status:
     def task(self):
         while True:
             status = self.api.poll()
-            print(status)
+            print("--->", status)
             self.framework.utils.set_sleep(0.1)
