@@ -4,6 +4,7 @@
 ******************************************************************************
 """
 
+import threading
 import linuxcnc
 
 class Status:
@@ -12,10 +13,12 @@ class Status:
         self.framework = framework
         self.linuxcnc = linuxcnc
         self.api = self.linuxcnc.stat()
-        self.data = None
+        self.task = threading.Thread(name="status_task", target=self.task)
+        self.task.daemon = True
+        self.task.start()
 
-    def work(self):
-        pass
-
-    def poll(self):
-        self.api.poll()
+    def task(self):
+        while True:
+            status = self.api.poll()
+            print(status)
+            self.framework.utils.set_sleep(0.1)
