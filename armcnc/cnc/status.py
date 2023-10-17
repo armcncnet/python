@@ -23,8 +23,10 @@ class Status:
                 try:
                     self.api = linuxcnc.stat()
                     status = self.api.poll()
-                    print(status)
                     # print(status.ini_filename)
                 except linuxcnc.error as detail:
                     self.framework.utils.service.service_write({"command": "launch:error", "message": detail, "data": False})
+
+                print(status)
+
             self.framework.utils.set_sleep(10)
