@@ -26,4 +26,4 @@ class Status:
                     # print(status.ini_filename)
                 except linuxcnc.error as detail:
                     self.framework.utils.service.service_write({"command": "launch:error", "message": detail, "data": False})
-            self.framework.utils.set_sleep(1)
+            self.framework.utils.set_sleep(10)
