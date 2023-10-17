@@ -22,7 +22,7 @@ class Status:
             if self.framework.machine.is_alive:
                 try:
                     status = self.api.poll()
-                    print(getattr(status, "ini_filename"))
+                    print(status)
                     # print(status.ini_filename)
                 except linuxcnc.error as detail:
                     self.framework.utils.service.service_write({"command": "launch:error", "message": detail, "data": False})
