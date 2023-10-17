@@ -18,5 +18,6 @@ class Status:
         self.framework.utils.set_sleep(5)
         self.api = linuxcnc.stat()
         cnc_stat = self.api.poll()
+        print("-->", cnc_stat)
         file = getattr(cnc_stat, "file")
         print("-->", file)
