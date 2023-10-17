@@ -23,7 +23,8 @@ class Status:
                 try:
                     status = self.api.poll()
                     for x in dir(status):
-                        print(x)
+                        if not x.startswith("_"):
+                            print(x, getattr(status, x))
                 except linuxcnc.error as detail:
                     self.framework.utils.service.service_write({"command": "launch:error", "message": detail, "data": False})
             self.framework.utils.set_sleep(0.1)
