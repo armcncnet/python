@@ -19,7 +19,6 @@ class CNC:
         self.command = Command(self.framework)
         self.ini_file = INIFile(self.framework)
         self.error_channel = ErrorChannel(self.framework)
-        self.start()
 
     def start(self):
         linuxcnc_pid = subprocess.Popen(["pidof", "-x", "linuxcnc"], stdout=subprocess.PIPE)

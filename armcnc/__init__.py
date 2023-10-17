@@ -34,7 +34,7 @@ class Init:
         self.signal_handler(False, False)
 
     def message_handle(self, message):
-        if self.armcnc and message["command"]:
+        if message["command"]:
             armcnc_message = "armcnc_message"
             if armcnc_message in dir(launch_file):
                 getattr(launch_file, armcnc_message)(self, message)
