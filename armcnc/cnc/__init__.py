@@ -19,7 +19,12 @@ class CNC:
         self.command = Command(self.framework)
         self.ini_file = INIFile(self.framework)
         self.error_channel = ErrorChannel(self.framework)
+        self.start()
 
     def start(self):
-        linuxcnc_start = "sudo -u armcnc linuxcnc" + sys.argv[1]
-        subprocess.Popen(linuxcnc_start, stderr=subprocess.STDOUT, shell=True)
+        linuxcnc_pid = subprocess.Popen(["pidof", "-x", "linuxcnc"], stdout=subprocess.PIPE)
+        linuxcnc_pid_result = linuxcnc_pid.communicate()[0]
+        if len(linuxcnc_pid_result) == 0:
+            linuxcnc_start = "sudo -u armcnc linuxcnc" + sys.argv[1]
+            subprocess.Popen(linuxcnc_start, stderr=subprocess.STDOUT, shell=True)
+
