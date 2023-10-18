@@ -23,6 +23,5 @@ class Machine:
             if self.is_alive:
                 if self.stat and self.stat["ini_filename"] != "":
                     inifile = linuxcnc.ini(self.stat["ini_filename"])
-                    for x in dir(inifile):
-                        print(x)
+                    print(inifile.find("EMC", "MACHINE"))
             self.framework.utils.set_sleep(0.2)
