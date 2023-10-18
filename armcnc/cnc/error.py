@@ -24,7 +24,7 @@ class Error:
                 if error:
                     kind, text = error
                     if kind in (linuxcnc.NML_ERROR, linuxcnc.OPERATOR_ERROR):
-                        self.framework.utils.service.service_write({"command": "launch:error", "message": text, "data": False})
+                        self.framework.utils.service.service_write({"command": "launch:machine:error", "message": text, "data": False})
             self.framework.utils.set_sleep(0.01)
 
 
