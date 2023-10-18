@@ -25,10 +25,11 @@ class Status:
                 except linuxcnc.error as detail:
                     self.framework.utils.service.service_write({"command": "launch:error", "message": detail, "data": False})
 
-                serializable_data = dict((name, getattr(self.api, name)) for name in dir(self.api) if not name.startswith('__'))
-                self.framework.utils.json.dumps(serializable_data)
-                # for x in dir(self.api):
-                #     if not x.startswith("_"):
-                #         print(x, getattr(self.api, x))
+                self.framework.machine.stat = {}
+                for x in dir(self.api):
+                    if not x.startswith("_"):
+                        self.framework.machine.stat[x] = getattr(self.api, x)
+
+                self.framework.utils.json.dumps(self.framework.machine.stat)
 
             self.framework.utils.set_sleep(5)
