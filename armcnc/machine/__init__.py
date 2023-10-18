@@ -35,4 +35,4 @@ class Machine:
                 "MACHINE": config.find("EMC", "MACHINE") or "unknown"
             }
 
-        self.framework.utils.service.service_write({"command": "launch:machine:config", "message": "", "data": self.config})
+            self.framework.utils.service.service_write({"command": "launch:machine:config", "message": "", "data": self.config})
