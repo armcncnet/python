@@ -6,6 +6,7 @@
 
 import sys
 import subprocess
+import linuxcnc
 from .status import Status
 from .command import Command
 from .ini import Ini
