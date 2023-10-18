@@ -27,7 +27,7 @@ class Status:
 
                 self.framework.machine.stat = {}
                 for x in dir(self.api):
-                    if not x.startswith("_"):
+                    if not x.startswith("_") and not callable(getattr(self.api, x)):
                         self.framework.machine.stat[x] = getattr(self.api, x)
 
                 self.framework.utils.json.dumps(self.framework.machine.stat)
