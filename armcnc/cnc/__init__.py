@@ -30,8 +30,26 @@ class CNC:
 
     def message_callback(self, message):
         if message and message["command"] and message["command"] != "":
+            if message["command"] == "desktop:control:device:estop":
+                self.status.api.poll()
+                if self.status.api.task_state == linuxcnc.STATE_ESTOP:
+                    self.command.api.state(linuxcnc.STATE_ESTOP_RESET)
+                else:
+                    if self.status.api.task_state == linuxcnc.STATE_ESTOP_RESET or self.status.api.task_state == linuxcnc.STATE_ON or self.status.api.task_state == linuxcnc.STATE_OFF:
+                        self.command.api.state(linuxcnc.STATE_ESTOP)
+                self.command.api.wait_complete(0.5)
+
             if message["command"] == "desktop:control:device:start":
                 self.status.api.poll()
+                if self.status.api.task_state == linuxcnc.STATE_ESTOP:
+                    return False
+                if self.status.api.task_state == linuxcnc.STATE_ON:
+                    self.command.api.state(linuxcnc.STATE_OFF)
+                else:
+                    if self.status.api.task_state == linuxcnc.STATE_OFF or self.status.api.task_state == linuxcnc.STATE_ESTOP_RESET:
+                        self.command.api.state(linuxcnc.STATE_OFF)
+                self.command.api.wait_complete(0.5)
+
                 print("read_line", self.status.api.read_line)
                 print("linear_units", self.status.api.linear_units)
                 print("paused", self.status.api.paused)
