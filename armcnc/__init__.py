@@ -34,7 +34,8 @@ class Init:
 
     def message_handle(self, message):
         if message["command"]:
-            self.armcnc.message_callback(message)
+            if self.machine.is_alive:
+                self.armcnc.message_callback(message)
             armcnc_message = "armcnc_message"
             if armcnc_message in dir(launch_file):
                 getattr(launch_file, armcnc_message)(self, message)
