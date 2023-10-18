@@ -48,7 +48,7 @@ class CNC:
                     self.command.api.state(linuxcnc.STATE_OFF)
                 else:
                     if self.status.api.task_state == linuxcnc.STATE_OFF or self.status.api.task_state == linuxcnc.STATE_ESTOP_RESET:
-                        self.command.api.state(linuxcnc.STATE_OFF)
+                        self.command.api.state(linuxcnc.STATE_ON)
                 self.command.api.wait_complete(0.5)
 
                 print("read_line", self.status.api.read_line)
