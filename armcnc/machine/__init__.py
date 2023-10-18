@@ -23,17 +23,16 @@ class Machine:
     def task(self):
         while True:
             if self.is_alive:
-                if self.stat and self.stat["ini_filename"] != "":
-                    self.get_config()
-
+                self.get_config()
             self.framework.utils.set_sleep(0.5)
 
     def get_config(self):
         if self.stat and self.stat["ini_filename"] != "":
-            config = configparser.ConfigParser()
-            config.read(self.stat["ini_filename"])
+            config = linuxcnc.ini(self.stat["ini_filename"])
             if self.config is None:
                 self.config = {}
-            self.config["EMC"] = dict(config["EMC"])
+            self.config["EMC"] = {
+                "MACHINE": config.find("EMC", "MACHINE") or "unknown"
+            }
 
         self.framework.utils.service.service_write({"command": "launch:machine:config", "message": "", "data": self.config})
