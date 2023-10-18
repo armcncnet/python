@@ -23,5 +23,6 @@ class Machine:
             if self.is_alive:
                 if self.stat:
                     inifile = linuxcnc.ini(self.stat.ini_filename)
-                    print(inifile)
+                    for x in dir(inifile):
+                        print(x)
             self.framework.utils.set_sleep(0.2)
