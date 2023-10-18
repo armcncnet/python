@@ -21,7 +21,7 @@ class Machine:
     def task(self):
         while True:
             if self.is_alive:
-                if self.stat:
+                if self.stat and self.stat["ini_filename"] != "":
                     inifile = linuxcnc.ini(self.stat["ini_filename"])
                     for x in dir(inifile):
                         print(x)
