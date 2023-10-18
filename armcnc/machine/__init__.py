@@ -30,7 +30,7 @@ class Machine:
                     if self.config is None:
                         self.config = {}
                     for section in ini_config.sections():
-                        print(section)
+                        print("--->", section)
                         if section not in self.config_filter:
                             self.config[section] = {}
                             for key, val in ini_config.items(section):
