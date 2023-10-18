@@ -32,7 +32,14 @@ class CNC:
         if message and message["command"] and message["command"] != "":
             if message["command"] == "desktop:control:device:start":
                 self.status.api.poll()
-                print("-->", self.status.api.task_state)
+                print("read_line", self.status.api.read_line)
+                print("linear_units", self.status.api.linear_units)
+                print("paused", self.status.api.paused)
+                print("estop", self.status.api.estop)
+                print("state", self.status.api.state)
+                print("interp_state", self.status.api.interp_state)
+                print("task_state", self.status.api.task_state)
+                print("task_state", self.status.api.task_state)
 
 
 
