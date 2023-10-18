@@ -26,7 +26,6 @@ class Init:
         if len(sys.argv) != 2:
             self.utils.log.error("Please specify the machine configuration file.")
             sys.exit(1)
-
         armcnc_start = "armcnc_start"
         if armcnc_start in dir(launch_file):
             self.armcnc.start()
@@ -35,6 +34,7 @@ class Init:
 
     def message_handle(self, message):
         if message["command"]:
+            self.armcnc.message_callback(message)
             armcnc_message = "armcnc_message"
             if armcnc_message in dir(launch_file):
                 getattr(launch_file, armcnc_message)(self, message)

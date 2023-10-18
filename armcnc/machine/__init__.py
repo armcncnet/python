@@ -5,7 +5,6 @@
 """
 
 import threading
-import configparser
 import linuxcnc
 
 class Machine:
@@ -51,5 +50,4 @@ class Machine:
                 "PROGRAM_PREFIX": config.find("DISPLAY", "PROGRAM_PREFIX"),
                 "INCREMENTS": config.find("DISPLAY", "INCREMENTS"),
             }
-
             self.framework.utils.service.service_write({"command": "launch:machine:config", "message": "", "data": self.config})
