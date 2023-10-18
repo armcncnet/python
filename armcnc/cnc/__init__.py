@@ -36,6 +36,7 @@ class CNC:
                 print("linear_units", self.status.api.linear_units)
                 print("paused", self.status.api.paused)
                 print("estop", self.status.api.estop)
+                print("enabled", self.status.api.enabled)
                 print("state", self.status.api.state)
                 print("interp_state", self.status.api.interp_state)
                 print("task_state", self.status.api.task_state)
