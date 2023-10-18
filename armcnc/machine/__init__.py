@@ -10,6 +10,4 @@ class Machine:
         self.framework = framework
         self.user = "armcnc"
         self.is_alive = False
-        self.config = {
-
-        }
+        self.stat = None
