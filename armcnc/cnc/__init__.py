@@ -39,7 +39,8 @@ class CNC:
                 print("state", self.status.api.state)
                 print("interp_state", self.status.api.interp_state)
                 print("task_state", self.status.api.task_state)
-                print("task_state", self.status.api.task_state)
+                print("homed", self.status.api.homed)
+                print("--------------------")
 
 
 
