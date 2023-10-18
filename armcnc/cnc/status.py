@@ -32,4 +32,4 @@ class Status:
 
                 self.framework.utils.service.service_write({"command": "launch:machine:status", "message": "", "data": self.framework.machine.stat})
 
-            self.framework.utils.set_sleep(5)
+            self.framework.utils.set_sleep(0.01)
