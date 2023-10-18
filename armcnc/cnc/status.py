@@ -32,4 +32,6 @@ class Status:
 
                 self.framework.utils.json.dumps(self.framework.machine.stat)
 
+                print(self.framework.machine.stat)
+
             self.framework.utils.set_sleep(5)
