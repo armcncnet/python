@@ -19,13 +19,14 @@ class Error:
 
     def task(self):
         while True:
-            if self.framework.machine.is_alive:
-                error = self.api.poll()
-                if error:
-                    kind, text = error
-                    if kind in (linuxcnc.NML_ERROR, linuxcnc.OPERATOR_ERROR):
-                        self.framework.utils.service.service_write({"command": "launch:machine:error", "message": text, "data": False})
-            self.framework.utils.set_sleep(0.1)
+            pass
+            # if self.framework.machine.is_alive:
+            #     error = self.api.poll()
+            #     if error:
+            #         kind, text = error
+            #         if kind in (linuxcnc.NML_ERROR, linuxcnc.OPERATOR_ERROR):
+            #             self.framework.utils.service.service_write({"command": "launch:machine:error", "message": text, "data": False})
+            # self.framework.utils.set_sleep(0.1)
 
 
 
