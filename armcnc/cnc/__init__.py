@@ -32,7 +32,7 @@ class CNC:
                 if os.path.exists("/tmp/linuxcnc.lock"):
                     self.framework.machine.is_alive = True
                     break
-                self.command.api.wait_complete(0.5)
+                self.command.api.wait_complete(2)
 
     def message_callback(self, message):
         if message and message["command"] and message["command"] != "":
