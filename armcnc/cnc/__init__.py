@@ -28,7 +28,7 @@ class CNC:
         if len(linuxcnc_pid_result) == 0:
             linuxcnc_start = "linuxcnc " + sys.argv[1]
             subprocess.Popen(linuxcnc_start, stderr=subprocess.STDOUT, shell=True)
-            self.framework.utils.set_sleep(10)
+            self.framework.utils.set_sleep(20)
         self.framework.machine.is_alive = True
 
     def message_callback(self, message):
