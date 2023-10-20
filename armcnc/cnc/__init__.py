@@ -4,6 +4,7 @@
 ******************************************************************************
 """
 
+import os
 import sys
 import subprocess
 import linuxcnc
@@ -26,10 +27,12 @@ class CNC:
         linuxcnc_pid_result = linuxcnc_pid.communicate()[0]
         if len(linuxcnc_pid_result) == 0:
             linuxcnc_start = "sudo -u " + self.framework.machine.user + " " + self.framework.machine.display + " " + "linuxcnc " + sys.argv[1]
-            process = subprocess.Popen(linuxcnc_start, stderr=subprocess.STDOUT, shell=True)
-            out, err = process.communicate()
-            if b"jog_invert" in out:
-                self.framework.machine.is_alive = True
+            subprocess.Popen(linuxcnc_start, stderr=subprocess.STDOUT, shell=True)
+            while True:
+                if os.path.exists("/tmp/linuxcnc.lock"):
+                    self.framework.machine.is_alive = True
+                    break
+                self.command.api.wait_complete(0.5)
 
     def message_callback(self, message):
         if message and message["command"] and message["command"] != "":
