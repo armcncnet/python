@@ -28,7 +28,11 @@ class CNC:
         if len(linuxcnc_pid_result) == 0:
             linuxcnc_start = "linuxcnc " + sys.argv[1]
             subprocess.Popen(linuxcnc_start, stderr=subprocess.STDOUT, shell=True)
-        # self.framework.machine.is_alive = True
+            while True:
+                if os.path.exists("/tmp/linuxcnc.lock"):
+                    self.framework.machine.is_alive = True
+                    break
+                self.framework.utils.set_sleep(2)
 
     def message_callback(self, message):
         if message and message["command"] and message["command"] != "":
