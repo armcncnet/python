@@ -28,7 +28,7 @@ class CNC:
             linuxcnc_start = "sudo -u " + self.framework.machine.user + " " + self.framework.machine.display + " " + "linuxcnc " + sys.argv[1]
             process = subprocess.Popen(linuxcnc_start, stderr=subprocess.STDOUT, shell=True)
             out, err = process.communicate()
-            if b"Success" in out:
+            if b"jog_invert" in out:
                 self.framework.machine.is_alive = True
 
     def message_callback(self, message):
