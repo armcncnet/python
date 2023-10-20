@@ -27,7 +27,7 @@ class CNC:
         if len(linuxcnc_pid_result) == 0:
             linuxcnc_start = "sudo -u " + self.framework.machine.user + " " + self.framework.machine.display + " " + "linuxcnc " + sys.argv[1]
             subprocess.Popen(linuxcnc_start, stderr=subprocess.STDOUT, shell=True)
-        self.framework.machine.is_alive = True
+        # self.framework.machine.is_alive = True
 
     def message_callback(self, message):
         if message and message["command"] and message["command"] != "":
