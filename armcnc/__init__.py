@@ -22,9 +22,6 @@ class Init:
         self.start()
 
     def start(self):
-        if len(sys.argv) != 2:
-            self.utils.log.error("Please specify the machine configuration file.")
-            sys.exit(1)
         armcnc_start = "armcnc_start"
         if armcnc_start in dir(launch_file):
             self.armcnc.start()
