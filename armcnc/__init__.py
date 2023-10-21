@@ -37,6 +37,7 @@ class Init:
                 getattr(launch_file, armcnc_message)(self, message)
 
     def signal_handler(self, signum, frame):
+        self.utils.service.service_write({"command": "launch:machine:status", "message": "", "data": False})
         armcnc_exit = "armcnc_exit"
         if armcnc_exit in dir(launch_file):
             getattr(launch_file, armcnc_exit)(self)
