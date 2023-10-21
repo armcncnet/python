@@ -25,10 +25,10 @@ class CNC:
         linuxcnc_pid = subprocess.Popen(["pidof", "-x", "linuxcnc"], stdout=subprocess.PIPE)
         linuxcnc_pid_result = linuxcnc_pid.communicate()[0]
         if len(linuxcnc_pid_result) == 0:
-            self.framework.utils.service.service_write({"command": "launch:machine:status", "message": "", "data": False})
+            self.framework.utils.service.service_write({"command": "launch:status", "message": "", "data": False})
             sys.exit()
         self.framework.machine.is_alive = True
-        self.framework.utils.service.service_write({"command": "launch:machine:status", "message": "", "data": True})
+        self.framework.utils.service.service_write({"command": "launch:status", "message": "", "data": True})
 
     def message_callback(self, message):
         if message and message["command"] and message["command"] != "":
