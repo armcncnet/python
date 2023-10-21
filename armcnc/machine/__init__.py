@@ -12,7 +12,6 @@ class Machine:
     def __init__(self, framework):
         self.framework = framework
         self.user = "armcnc"
-        self.display = "DISPLAY=:0.0"
         self.is_alive = False
         self.stat = None
         self.config = None
