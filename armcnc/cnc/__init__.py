@@ -25,14 +25,10 @@ class CNC:
     def start(self):
         linuxcnc_pid = subprocess.Popen(["pidof", "-x", "linuxcnc"], stdout=subprocess.PIPE)
         linuxcnc_pid_result = linuxcnc_pid.communicate()[0]
-        if len(linuxcnc_pid_result) == 0:
-            linuxcnc_start = "linuxcnc " + sys.argv[1]
-            subprocess.Popen(linuxcnc_start, stderr=subprocess.STDOUT, shell=True)
-            while True:
-                self.framework.utils.set_sleep(5)
-                if os.path.exists("/tmp/linuxcnc.lock"):
-                    self.framework.machine.is_alive = True
-                    break
+        if len(linuxcnc_pid_result) > 0:
+            self.framework.machine.is_alive = True
+        else:
+            self.start()
 
     def message_callback(self, message):
         if message and message["command"] and message["command"] != "":
