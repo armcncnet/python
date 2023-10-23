@@ -1,11 +1,19 @@
+import os
+import shutil
 from setuptools import setup, find_packages
+
+dist_directory = "dist"
+if os.path.exists(dist_directory):
+    shutil.rmtree(dist_directory)
+    shutil.rmtree("build")
+    shutil.rmtree("armcnc.egg-info")
 
 with open("readme.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
     name="armcnc",
-    version="1.0.32",
+    version="1.0.33",
     author="MakerYang",
     author_email="admin@wileho.com",
     description="Python development framework for armcnc.",
