@@ -36,8 +36,10 @@ class Status:
                 user_data = {
                     "status": self.framework.machine.stat,
                     "user": self.framework.machine.user,
+                    "increments": inifile.find("DISPLAY", "INCREMENTS") or [],
                     "coordinates": inifile.find("TRAJ", "COORDINATES") or "unknown",
-                    "linear_units": inifile.find("TRAJ", "LINEAR_UNITS") or "unknown"
+                    "linear_units": inifile.find("TRAJ", "LINEAR_UNITS") or "mm",
+                    "angular_units": inifile.find("TRAJ", "ANGULAR_UNITS") or "degree",
                 }
 
                 self.framework.utils.service.service_write({"command": "launch:machine:status", "message": "", "data": user_data})
