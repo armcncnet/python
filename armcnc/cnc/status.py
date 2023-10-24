@@ -36,6 +36,7 @@ class Status:
                 user_data = {
                     "status": self.framework.machine.stat,
                     "user": self.framework.machine.user,
+                    "grids": inifile.find("DISPLAY", "GRIDS") or [],
                     "increments": inifile.find("DISPLAY", "INCREMENTS") or [],
                     "coordinates": inifile.find("TRAJ", "COORDINATES") or "unknown",
                     "linear_units": inifile.find("TRAJ", "LINEAR_UNITS") or "mm",
