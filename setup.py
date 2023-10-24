@@ -13,7 +13,7 @@ with open("readme.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="armcnc",
-    version="1.0.35",
+    version="1.0.36",
     author="MakerYang",
     author_email="admin@wileho.com",
     description="Python development framework for armcnc.",
