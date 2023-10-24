@@ -7,6 +7,7 @@
 import threading
 import linuxcnc
 
+
 class Status:
 
     def __init__(self, framework):
@@ -23,10 +24,21 @@ class Status:
                 try:
                     self.api.poll()
                 except linuxcnc.error as detail:
-                    self.framework.utils.service.service_write({"command": "launch:machine:error", "message": detail, "data": False})
+                    self.framework.utils.service.service_write(
+                        {"command": "launch:machine:error", "message": detail, "data": False})
+
                 self.framework.machine.stat = {}
                 for x in dir(self.api):
                     if not x.startswith("_") and not callable(getattr(self.api, x)):
                         self.framework.machine.stat[x] = getattr(self.api, x)
-                self.framework.utils.service.service_write({"command": "launch:machine:status", "message": "", "data": self.framework.machine.stat})
+
+                inifile = linuxcnc.ini(self.api.ini_filename)
+                user_data = {
+                    "status": self.framework.machine.stat,
+                    "user": self.framework.machine.user,
+                    "coordinates": inifile.find("TRAJ", "COORDINATES") or "unknown",
+                    "linear_units": inifile.find("TRAJ", "LINEAR_UNITS") or "unknown"
+                }
+
+                self.framework.utils.service.service_write({"command": "launch:machine:status", "message": "", "data": user_data})
             self.framework.utils.set_sleep(0.05)
