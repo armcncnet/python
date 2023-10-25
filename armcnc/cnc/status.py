@@ -27,12 +27,12 @@ class Status:
                     self.framework.utils.service.service_write(
                         {"command": "launch:machine:error", "message": detail, "data": False})
 
-                self.framework.machine.stat = {}
+                self.framework.machine.info = {}
                 for x in dir(self.api):
                     if not x.startswith("_") and not callable(getattr(self.api, x)):
-                        self.framework.machine.stat[x] = getattr(self.api, x)
+                        self.framework.machine.info[x] = getattr(self.api, x)
 
-                if self.framework.machine.stat["ini_filename"]:
+                if self.framework.machine.info["ini_filename"]:
                     inifile = linuxcnc.ini(self.framework.machine.stat["ini_filename"])
                     user_data = {
                         "status": self.framework.machine.stat,
@@ -43,5 +43,5 @@ class Status:
                         "angular_units": inifile.find("TRAJ", "ANGULAR_UNITS") or "degree",
                     }
 
-                    self.framework.utils.service.service_write({"command": "launch:machine:status", "message": "", "data": user_data})
+                    self.framework.utils.service.service_write({"command": "launch:machine:info", "message": "", "data": user_data})
             self.framework.utils.set_sleep(0.05)
