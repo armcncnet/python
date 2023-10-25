@@ -51,7 +51,7 @@ class Status:
                     self.framework.machine.info["user_data"] = user_data
 
                     self.framework.utils.service.service_write({"command": "launch:machine:info", "message": "", "data": self.framework.machine.info})
-            self.framework.utils.set_sleep(0.02)
+            self.framework.utils.set_sleep(0.05)
 
     def get_jog_mode(self):
         if self.framework.machine.is_alive:
