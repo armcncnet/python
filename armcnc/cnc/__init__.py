@@ -38,6 +38,11 @@ class CNC:
                     if self.status.api.task_state == linuxcnc.STATE_ESTOP_RESET or self.status.api.task_state == linuxcnc.STATE_ON or self.status.api.task_state == linuxcnc.STATE_OFF:
                         self.command.api.state(linuxcnc.STATE_ESTOP)
                 self.command.api.wait_complete(0.5)
+            if message["command"] == "desktop:control:jog:start":
+                pass
+
+            if message["command"] == "desktop:control:jog:stop":
+                pass
 
             if message["command"] == "desktop:control:device:start":
                 self.status.api.poll()

@@ -33,15 +33,27 @@ class Status:
                         self.framework.machine.info[x] = getattr(self.api, x)
 
                 if self.framework.machine.info["ini_filename"]:
-                    inifile = linuxcnc.ini(self.framework.machine.stat["ini_filename"])
+                    inifile = linuxcnc.ini(self.framework.machine.info["ini_filename"])
                     user_data = {
-                        "status": self.framework.machine.stat,
                         "user": self.framework.machine.user,
                         "increments": inifile.find("DISPLAY", "INCREMENTS") or [],
                         "coordinates": inifile.find("TRAJ", "COORDINATES") or "unknown",
                         "linear_units": inifile.find("TRAJ", "LINEAR_UNITS") or "mm",
                         "angular_units": inifile.find("TRAJ", "ANGULAR_UNITS") or "degree",
+                        "estop": self.framework.machine.info["estop"],
+                        "paused": self.framework.machine.info["paused"],
+                        "enabled": self.framework.machine.info["enabled"],
+                        "state": self.framework.machine.info["state"],
+                        "interp_state": self.framework.machine.info["interp_state"],
+                        "task_state": self.framework.machine.info["task_state"],
+                        "homed": self.framework.machine.info["homed"]
                     }
+                    self.framework.machine.info["user_data"] = user_data
 
-                    self.framework.utils.service.service_write({"command": "launch:machine:info", "message": "", "data": user_data})
+                    self.framework.utils.service.service_write({"command": "launch:machine:info", "message": "", "data": self.framework.machine.info})
             self.framework.utils.set_sleep(0.05)
+
+    def get_jog_mode(self):
+        if self.framework.machine.is_alive:
+            self.api.poll()
+
