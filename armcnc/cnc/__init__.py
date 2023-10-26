@@ -60,10 +60,25 @@ class CNC:
                         self.command.home_axis(value)
 
             if message["command"] == "desktop:control:jog:start":
-                pass
+                axis = message["axis"]
+                speed = message["speed"]
+                jog_mode = self.command.get_jog_mode()
+                if jog_mode:
+                    axis = self.framework.machine.get_num_axis(axis)
+                else:
+                    axis = self.framework.machine.get_num(axis)
+                speed = speed / 60
+                increment = message["increment"]
+                self.command.jog_increment(axis, speed, increment, jog_mode)
 
             if message["command"] == "desktop:control:jog:stop":
-                pass
+                axis = message["axis"]
+                jog_mode = self.command.get_jog_mode()
+                if jog_mode:
+                    axis = self.framework.machine.get_num_axis(axis)
+                else:
+                    axis = self.framework.machine.get_num(axis)
+                self.command.jog_stop(axis, jog_mode)
 
             if message["command"] == "desktop:control:device:start":
                 self.status.api.poll()

@@ -36,7 +36,7 @@ class Status:
                     inifile = linuxcnc.ini(self.father.framework.machine.info["ini_filename"])
                     user_data = {
                         "user": self.father.framework.machine.user,
-                        "increments": list(inifile.find("DISPLAY", "INCREMENTS")) or [],
+                        "increments": [value.replace("mm", "") for value in inifile.find("DISPLAY", "INCREMENTS").split(",")],
                         "coordinates": list(inifile.find("TRAJ", "COORDINATES")) or [],
                         "linear_units": inifile.find("TRAJ", "LINEAR_UNITS") or "mm",
                         "angular_units": inifile.find("TRAJ", "ANGULAR_UNITS") or "degree",
@@ -48,6 +48,7 @@ class Status:
                         "task_state": self.father.framework.machine.info["task_state"],
                         "homed": self.father.framework.machine.info["homed"]
                     }
+
                     self.father.framework.machine.info["user_data"] = user_data
 
                     self.father.framework.machine.axis = user_data["coordinates"]
