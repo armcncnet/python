@@ -38,6 +38,27 @@ class CNC:
                     if self.status.api.task_state == linuxcnc.STATE_ESTOP_RESET or self.status.api.task_state == linuxcnc.STATE_ON or self.status.api.task_state == linuxcnc.STATE_OFF:
                         self.command.api.state(linuxcnc.STATE_ESTOP)
                 self.command.api.wait_complete(0.5)
+
+            if message["command"] == "desktop:control:device:override_limits":
+                self.command.set_mode(linuxcnc.MODE_MANUAL, 0.5)
+                self.command.api.override_limits()
+                self.command.api.wait_complete(0.5)
+
+            if message["command"] == "desktop:control:device:home":
+                if len(self.framework.machine.coordinates) > 0:
+                    self.command.set_teleop_enable(0)
+                    if message["data"] == "all":
+                        # 优先Z轴回零
+                        self.command.home_axis(2)
+                        for x in range(len(self.framework.machine.coordinates) - 1, -1, -1):
+                            if x == 2:
+                                continue
+                            self.command.home_axis(x)
+                    else:
+                        value = int(message["data"])
+                        self.command.set_teleop_enable_mode(0)
+                        self.command.home_axis(value)
+
             if message["command"] == "desktop:control:jog:start":
                 pass
 
@@ -54,17 +75,3 @@ class CNC:
                     if self.status.api.task_state == linuxcnc.STATE_OFF or self.status.api.task_state == linuxcnc.STATE_ESTOP_RESET:
                         self.command.api.state(linuxcnc.STATE_ON)
                 self.command.api.wait_complete(0.5)
-
-                print("read_line", self.status.api.read_line)
-                print("linear_units", self.status.api.linear_units)
-                print("paused", self.status.api.paused)
-                print("estop", self.status.api.estop)
-                print("enabled", self.status.api.enabled)
-                print("state", self.status.api.state)
-                print("interp_state", self.status.api.interp_state)
-                print("task_state", self.status.api.task_state)
-                print("homed", self.status.api.homed)
-                print("--------------------")
-
-
-
