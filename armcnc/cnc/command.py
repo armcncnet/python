@@ -9,7 +9,7 @@ import linuxcnc
 class Command:
 
     def __init__(self, framework):
-        self.framework = framework
+        self.framework = framework.framework
         self.linuxcnc = linuxcnc
         self.api = self.linuxcnc.command()
 
@@ -22,7 +22,6 @@ class Command:
             self.api.wait_complete()
         else:
             self.api.wait_complete(t)
-
         self.framework.status.api.poll()
         return True
 

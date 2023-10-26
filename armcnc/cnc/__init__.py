@@ -15,9 +15,9 @@ class CNC:
 
     def __init__(self, framework):
         self.framework = framework
-        self.status = Status(self.framework)
-        self.command = Command(self.framework)
-        self.error = Error(self.framework)
+        self.status = Status(self)
+        self.command = Command(self)
+        self.error = Error(self)
 
     def start(self):
         linuxcnc_pid = subprocess.Popen(["pidof", "-x", "linuxcnc"], stdout=subprocess.PIPE)
@@ -45,12 +45,12 @@ class CNC:
                 self.command.api.wait_complete(0.5)
 
             if message["command"] == "desktop:control:device:home":
-                if len(self.framework.machine.coordinates) > 0:
+                if len(self.framework.machine.axis) > 0:
                     self.command.set_teleop_enable(0)
                     if message["data"] == "all":
                         # 优先Z轴回零
                         self.command.home_axis(2)
-                        for x in range(len(self.framework.machine.coordinates) - 1, -1, -1):
+                        for x in range(len(self.framework.machine.axis) - 1, -1, -1):
                             if x == 2:
                                 continue
                             self.command.home_axis(x)

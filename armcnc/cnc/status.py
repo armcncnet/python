@@ -11,7 +11,7 @@ import linuxcnc
 class Status:
 
     def __init__(self, framework):
-        self.framework = framework
+        self.framework = framework.framework
         self.linuxcnc = linuxcnc
         self.api = linuxcnc.stat()
         self.task = threading.Thread(name="status_task", target=self.task)
@@ -36,7 +36,7 @@ class Status:
                     inifile = linuxcnc.ini(self.framework.machine.info["ini_filename"])
                     user_data = {
                         "user": self.framework.machine.user,
-                        "increments": inifile.find("DISPLAY", "INCREMENTS") or [],
+                        "increments": list(inifile.find("DISPLAY", "INCREMENTS")) or [],
                         "coordinates": list(inifile.find("TRAJ", "COORDINATES")) or [],
                         "linear_units": inifile.find("TRAJ", "LINEAR_UNITS") or "mm",
                         "angular_units": inifile.find("TRAJ", "ANGULAR_UNITS") or "degree",
@@ -50,7 +50,7 @@ class Status:
                     }
                     self.framework.machine.info["user_data"] = user_data
 
-                    self.framework.machine.coordinates = user_data["coordinates"]
+                    self.framework.machine.axis = user_data["coordinates"]
 
                     self.framework.utils.service.service_write({"command": "launch:machine:info", "message": "", "data": self.framework.machine.info})
             self.framework.utils.set_sleep(0.05)
