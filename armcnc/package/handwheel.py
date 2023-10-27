@@ -123,7 +123,7 @@ class HandWheel:
                         jog_continuous_speed = 0
                         if step < 0:
                             jog_continuous_speed = 0 - jog_speed
-                        if step > 0:
+                        elif step > 0:
                             jog_continuous_speed = jog_speed
                         if jog_continuous_speed < 0:
                             self.jog_dir = False
@@ -158,7 +158,7 @@ class HandWheel:
                     self.last_jog_speed = 0
                     self.last_jog_dir = None
                     self.use_jog = False
-        self.package.framework.utils.set_sleep(0.1)
+                self.package.framework.utils.set_sleep(0.1)
 
     def set_axis_num(self):
         axis = self.package.framework.machine.axis
@@ -190,9 +190,8 @@ class HandWheel:
 
     def jog_count_value(self, jog):
         jog_length = 0
-        if len(self.jog_speed) > 0:
-            for i in jog:
-                jog_length = jog_length + i
+        for i in jog:
+            jog_length = jog_length + i
         return float(jog_length) / 100
 
     def get_jog_speed(self, axis):
@@ -213,14 +212,13 @@ class HandWheel:
 
     def str2hex(self, jog):
         data = 0
-        if len(self.jog_speed) > 0:
-            jog = jog.upper()
-            for c in jog:
-                tmp = ord(c)
-                if tmp <= ord("9"):
-                    data = data << 4
-                    data += tmp - ord("0")
-                elif ord("A") <= tmp <= ord("F"):
-                    data = data << 4
-                    data += tmp - ord("A") + 10
+        jog = jog.upper()
+        for c in jog:
+            tmp = ord(c)
+            if tmp <= ord("9"):
+                data = data << 4
+                data += tmp - ord("0")
+            elif ord("A") <= tmp <= ord("F"):
+                data = data << 4
+                data += tmp - ord("A") + 10
         return data

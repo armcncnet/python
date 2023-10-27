@@ -61,7 +61,7 @@ class Status:
                     else:
                         self.father.framework.machine.task_state = False
 
-                    if self.father.framework.package.handwheel.serial_status is False:
+                    if not self.father.framework.package.handwheel.serial_status:
                         self.father.framework.package.handwheel.init_serial()
 
                     self.father.framework.utils.service.service_write({"command": "launch:machine:info", "message": "", "data": self.father.framework.machine.info})
