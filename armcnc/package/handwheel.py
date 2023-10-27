@@ -68,9 +68,11 @@ class HandWheel:
                 if self.jog_count_time > 1:
                     self.do_jog()
                     self.jog_count_time = 0
+                    print("-->", self.axis_num)
                 if self.info_count_time > 60:
                     self.set_axis_num()
                     self.info_count_time = 0
+                    print("--->", self.axis_num)
                 self.info_count_time = self.info_count_time + 1
                 recv_str = ""
                 count = self.serial.inWaiting()
@@ -81,6 +83,7 @@ class HandWheel:
                 self.jog_count_time = self.jog_count_time + 1
                 self.serial.write(self.write_char)
                 if count == 0:
+                    print("continue-->", self.axis_num)
                     continue
                 self.jog = recv_str[0:4]
                 self.jog = self.str2hex(self.jog)
@@ -107,6 +110,7 @@ class HandWheel:
                     if step < -30000:
                         step = 65536 + step
                     if step > 100 or step < -100:
+                        print("continue--->", self.axis_num)
                         continue
                     if self.jog_rate == 255:
                         self.use_jog = True
@@ -158,15 +162,15 @@ class HandWheel:
                     self.last_jog_speed = 0
                     self.last_jog_dir = None
                     self.use_jog = False
-                self.package.framework.utils.set_sleep(0.1)
+                self.package.framework.utils.set_sleep(0.2)
 
     def set_axis_num(self):
         axis = self.package.framework.machine.axis
         self.axis_num = 3
-        if len(axis) > 3:
-            axis_str = axis[3]
-            if axis_str != "A":
-                self.axis_num = 4
+        if len(axis) < 4:
+            axis.append("B")
+        if axis[3] != "A":
+            self.axis_num = 4
 
     def do_jog(self):
         jog_length = 0
@@ -200,7 +204,7 @@ class HandWheel:
         if axis == 1:
             speed = self.jog_speed["EXTINFO_JOY_Y_VELOCITY"]
         if axis == 2:
-            speed = self.jog_speed["EXTINFO_JOY_Y_VELOCITY"]
+            speed = self.jog_speed["EXTINFO_JOY_Z_VELOCITY"]
         if axis == 3:
             speed = self.jog_speed["EXTINFO_JOY_A_VELOCITY"]
         return speed / 60
