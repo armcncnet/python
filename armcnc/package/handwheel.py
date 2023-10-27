@@ -163,11 +163,10 @@ class HandWheel:
     def set_axis_num(self):
         axis = self.package.framework.machine.axis
         self.axis_num = 3
-        if len(axis) < 4:
-            return
-        axis_str = axis[3]
-        if axis_str != "A":
-            self.axis_num = 4
+        if len(axis) > 3:
+            axis_str = axis[3]
+            if axis_str != "A":
+                self.axis_num = 4
 
     def do_jog(self):
         jog_length = 0
