@@ -27,7 +27,6 @@ class Init:
         armcnc_start = "armcnc_start"
         if armcnc_start in dir(launch_file):
             self.armcnc.start()
-            self.package.handwheel.init_serial()
             getattr(launch_file, armcnc_start)(self)
         self.signal_handler(False, False)
 
