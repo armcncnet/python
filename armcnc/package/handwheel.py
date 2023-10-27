@@ -57,7 +57,7 @@ class HandWheel:
     def task(self):
         self.jog_speed = {}
         config = configparser.ConfigParser()
-        config.read(self.package.framework.machine.workspace + "/config/" + self.package.framework.machine.workspace.machine_path + "/machine.user")
+        config.read(self.package.framework.machine.workspace + "/config/" + self.package.framework.machine.machine_path + "/machine.user")
         config_items = config.items("HANDWHEEL")
         for key, val in config_items:
             key = "EXTINFO_" + key
