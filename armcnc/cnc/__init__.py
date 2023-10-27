@@ -30,8 +30,6 @@ class CNC:
 
     def message_callback(self, message):
         if message and message["command"] and message["command"] != "":
-            if message["command"] == "service:machine:path":
-                self.framework.machine.machine_path = message["data"]
             if message["command"] == "desktop:control:device:estop":
                 self.status.api.poll()
                 if self.status.api.task_state == linuxcnc.STATE_ESTOP:
