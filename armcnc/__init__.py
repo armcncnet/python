@@ -7,6 +7,7 @@
 import sys
 import signal
 from .utils import Utils
+from .package import Package
 from .cnc import CNC
 from .machine import Machine
 import launch as launch_file
@@ -17,6 +18,7 @@ class Init:
         signal.signal(signal.SIGINT, self.signal_handler)
         signal.signal(signal.SIGTERM, self.signal_handler)
         self.utils = Utils(self)
+        self.package = Package(self)
         self.machine = Machine(self)
         self.armcnc = CNC(self)
         self.start()
