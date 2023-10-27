@@ -20,7 +20,7 @@ class HandWheel:
         self.write_char = "01 03 04 7D 00 07 95 20"
         self.jog = 0
         self.jog_axis = False
-        self.jog_rate = False
+        self.jog_rate = 0
         self.jog_speed = {}
         self.last_jog_speed = 0
         self.jog_count_time = 0
@@ -68,7 +68,7 @@ class HandWheel:
                 if self.jog_count_time > 1:
                     self.do_jog()
                     self.jog_count_time = 0
-                if self.jog_count_time > 60:
+                if self.info_count_time > 60:
                     self.set_axis_num()
                     self.info_count_time = 0
                 self.info_count_time = self.info_count_time + 1
@@ -208,6 +208,7 @@ class HandWheel:
 
     def send_increment(self, length, axis):
         speed = self.get_jog_speed(axis)
+        print("--->", speed, axis)
         self.package.framework.armcnc.command.jog_increment(axis, speed, length, "")
 
     def str2hex(self, jog):
