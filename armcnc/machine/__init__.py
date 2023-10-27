@@ -13,7 +13,8 @@ class Machine:
         self.axis_tmp = ""
         self.is_alive = False
         self.info = None
-        self.path = ""
+        self.machine_path = ""
+        self.workspace = "/opt/armcnc"
 
     def get_num_axis(self, axis):
         self.axis_tmp = ''.join(self.axis)
