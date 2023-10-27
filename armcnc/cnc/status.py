@@ -34,10 +34,11 @@ class Status:
 
                 if self.father.framework.machine.info["ini_filename"]:
                     inifile = linuxcnc.ini(self.father.framework.machine.info["ini_filename"])
-                    self.father.framework.machine.path = self.father.framework.machine.info["ini_filename"].replace(self.father.framework.machine.workspace+"/configs/", "").replace("/machine.ini", "")
+                    self.father.framework.machine.machine_path = self.father.framework.machine.info["ini_filename"].replace(self.father.framework.machine.workspace+"/configs/", "").replace("/machine.ini", "")
                     user_data = {
                         "user": self.father.framework.machine.user,
-                        "path": self.father.framework.machine.path,
+                        "workspace": self.father.framework.machine.workspace,
+                        "machine_path": self.father.framework.machine.machine_path,
                         "increments": [value.replace("mm", "") for value in inifile.find("DISPLAY", "INCREMENTS").split(",")],
                         "coordinates": list(inifile.find("TRAJ", "COORDINATES")) or [],
                         "linear_units": inifile.find("TRAJ", "LINEAR_UNITS") or "mm",
@@ -54,6 +55,11 @@ class Status:
                     self.father.framework.machine.info["user_data"] = user_data
 
                     self.father.framework.machine.axis = user_data["coordinates"]
+
+                    if user_data["task_state"] == 4:
+                        self.father.framework.machine.task_state = True
+                    else:
+                        self.father.framework.machine.task_state = False
 
                     self.father.framework.utils.service.service_write({"command": "launch:machine:info", "message": "", "data": self.father.framework.machine.info})
             self.father.framework.utils.set_sleep(0.05)

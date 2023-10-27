@@ -15,6 +15,7 @@ class Machine:
         self.info = None
         self.machine_path = ""
         self.workspace = "/opt/armcnc"
+        self.task_state = False
 
     def get_num_axis(self, axis):
         self.axis_tmp = ''.join(self.axis)

@@ -57,17 +57,19 @@ class Command:
         return mode
 
     def jog_continuous(self, axis, speed, mode):
-        if mode == "":
-            mode = self.get_jog_mode()
-        self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
-        self.api.jog(linuxcnc.JOG_CONTINUOUS, mode, int(axis), int(speed))
+        if self.father.framework.machine.task_state:
+            if mode == "":
+                mode = self.get_jog_mode()
+            self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
+            self.api.jog(linuxcnc.JOG_CONTINUOUS, mode, int(axis), int(speed))
 
     def jog_increment(self, axis, speed, increment, mode):
-        if mode == "":
-            mode = self.get_jog_mode()
-        increment = float(increment)
-        self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
-        self.api.jog(linuxcnc.JOG_INCREMENT, mode, int(axis), int(speed), increment)
+        if self.father.framework.machine.task_state:
+            if mode == "":
+                mode = self.get_jog_mode()
+            increment = float(increment)
+            self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
+            self.api.jog(linuxcnc.JOG_INCREMENT, mode, int(axis), int(speed), increment)
 
     def jog_stop(self, axis, mode):
         if mode == "":
@@ -75,9 +77,10 @@ class Command:
         self.api.jog(linuxcnc.JOG_STOP, mode, int(axis))
 
     def home_axis(self, axis):
-        self.set_mode(linuxcnc.MODE_MANUAL, 1)
-        self.api.home(axis)
-        self.api.wait_complete()
+        if self.father.framework.machine.task_state:
+            self.set_mode(linuxcnc.MODE_MANUAL, 1)
+            self.api.home(axis)
+            self.api.wait_complete()
 
     def all_homed(self):
         homed = True
