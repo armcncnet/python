@@ -64,14 +64,11 @@ class HandWheel:
                         for key, val in items:
                             key = "EXTINFO_" + key.upper()
                             self.joy_speed[key] = float(val.strip())
-                        print("joy_speed-->", self.joy_speed)
                     continue
                 if self.joy_count_time > 1:
-                    print("joy_count_time-->", self.joy_count_time)
                     self.do_joy()
                     self.joy_count_time = 0
                 if self.info_count_time > 60:
-                    print("info_count_time-->", self.info_count_time)
                     self.set_axis_num()
                     self.info_count_time = 0
                 self.info_count_time = self.info_count_time + 1
@@ -79,9 +76,7 @@ class HandWheel:
                 self.read_count = self.serial.inWaiting()
                 if self.read_count != 0:
                     read_tmp = self.serial.read(self.read_count)
-                    print("read_tmp-->", read_tmp)
                     self.read = binascii.b2a_hex(read_tmp).decode("utf-8")[6:34]
-                    print("read-->", self.read)
                 self.serial.flushInput()
                 self.joy_count_time = self.joy_count_time + 1
                 self.serial.write(self.write)
@@ -89,17 +84,13 @@ class HandWheel:
                     continue
                 self.joy = self.read[0:4]
                 self.joy = self.str2hex(self.joy)
-                print("joy-->", self.joy)
                 self.joy_axis = self.read[8:12]
                 self.joy_axis = self.str2hex(self.joy_axis)
-                print("joy_axis-->", self.joy_axis)
                 self.joy_rate = self.read[12:16]
                 self.joy_rate = self.str2hex(self.joy_rate)
-                print("joy_rate-->", self.joy_rate)
                 if self.first_run:
                     self.last_joy_value = self.joy
                     self.first_run = False
-                print("last_joy_value-->", self.last_joy_value)
                 joy_rate_tmp = 10
                 if self.joy_rate == 171:
                     joy_rate_tmp = 1
@@ -119,6 +110,7 @@ class HandWheel:
                         continue
                     if self.joy_rate == 255:
                         self.use_joy = True
+                        axis = 0
                         if self.joy_axis == 101:
                             axis = 0
                         if self.joy_axis == 152:
@@ -128,6 +120,7 @@ class HandWheel:
                         if self.joy_axis == 255:
                             axis = self.axis_num
                         jog_speed_tmp = self.get_joy_speed(axis)
+                        joy_continuous_speed = 0
                         if step_tmp < 0:
                             joy_continuous_speed = 0 - jog_speed_tmp
                         elif step_tmp > 0:
@@ -165,13 +158,12 @@ class HandWheel:
                     self.last_joy_speed = 0
                     self.last_jpy_dir = None
                     self.use_joy = False
-            self.package.framework.utils.set_sleep(0.1)
+            self.package.framework.utils.set_sleep(0.05)
 
     def do_joy(self):
         jog_length = 0
         if len(self.joy_x) > 0:
             jog_length = self.count_joy_value(self.joy_x)
-            print("do_joy-->", jog_length)
             self.joy_x = []
             self.joy_increment(jog_length, 0)
         if len(self.joy_y) > 0:
@@ -211,13 +203,12 @@ class HandWheel:
         axis = self.package.framework.machine.axis
         print("set_axis_num-->", axis)
         self.axis_num = 3
-        # if len(axis) < 4:
-        #     print("set_axis_num return---->", len(axis))
-        #     return
-        # axis_tmp = axis[3]
-        # axis_tmp = axis_tmp.upper()
-        # if self.package.framework.armcnc.command.is_all_homed() and axis_tmp != "A":
-        #     self.axis_num = 4
+        if len(axis) < 4:
+            return
+        axis_tmp = axis[3]
+        axis_tmp = axis_tmp.upper()
+        if self.package.framework.armcnc.command.is_all_homed() and axis_tmp != "A":
+            self.axis_num = 4
 
     def str2hex(self, joy):
         data = 0
