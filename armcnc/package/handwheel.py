@@ -85,7 +85,7 @@ class HandWheel:
                 self.serial.flushInput()
                 self.joy_count_time = self.joy_count_time + 1
                 self.serial.write(self.write)
-                if self.read_count == 0 or self.read == "":
+                if self.read_count == 0:
                     continue
                 self.joy = self.read[0:4]
                 self.joy = self.str2hex(self.joy)
