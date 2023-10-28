@@ -201,7 +201,6 @@ class HandWheel:
 
     def set_axis_num(self):
         axis = self.package.framework.machine.axis
-        print("set_axis_num-->", axis)
         self.axis_num = 3
         if len(axis) < 4:
             return
