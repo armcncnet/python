@@ -67,9 +67,11 @@ class HandWheel:
                         print("joy_speed-->", self.joy_speed)
                     continue
                 if self.joy_count_time > 1:
+                    print("joy_count_time-->", self.joy_count_time)
                     self.do_joy()
                     self.joy_count_time = 0
                 if self.info_count_time > 60:
+                    print("info_count_time-->", self.info_count_time)
                     self.set_axis_num()
                     self.info_count_time = 0
                 self.info_count_time = self.info_count_time + 1
@@ -201,6 +203,7 @@ class HandWheel:
 
     def set_axis_num(self):
         axis = self.package.framework.machine.axis
+        print("set_axis_num-->", axis)
         self.axis_num = 3
         # if len(axis) < 4:
         #     print("set_axis_num return---->", len(axis))
