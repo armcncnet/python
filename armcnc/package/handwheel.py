@@ -93,7 +93,8 @@ class HandWheel:
                 self.joy_axis = self.read[8:12]
                 self.joy_axis = self.str2hex(self.joy_axis)
                 print("joy_axis-->", self.joy_axis)
-                self.joy_rate = int(self.read[12:16], 16)
+                self.joy_rate = self.read[12:16]
+                self.joy_rate = self.str2hex(self.joy_rate)
                 print("joy_rate-->", self.joy_rate)
                 if self.first_run:
                     self.last_joy_value = self.joy
