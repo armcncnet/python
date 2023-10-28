@@ -67,6 +67,7 @@ class HandWheel:
                         for key, val in items:
                             key = "EXTINFO_" + key.upper()
                             self.joy_speed[key] = float(val.strip())
+                        print("->", self.joy_speed)
                     continue
                 if self.joy_count_time > 1:
                     self.do_joy()
@@ -113,7 +114,6 @@ class HandWheel:
                         continue
                     if self.joy_rate == 255:
                         self.use_joy = True
-                        axis = 0
                         if self.joy_axis == 101:
                             axis = 0
                         if self.joy_axis == 152:
@@ -123,7 +123,6 @@ class HandWheel:
                         if self.joy_axis == 255:
                             axis = self.axis_num
                         jog_speed_tmp = self.get_joy_speed(axis)
-                        joy_continuous_speed = 0
                         if step_tmp < 0:
                             joy_continuous_speed = 0 - jog_speed_tmp
                         elif step_tmp > 0:
