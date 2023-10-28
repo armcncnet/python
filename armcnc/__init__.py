@@ -27,6 +27,7 @@ class Init:
         armcnc_start = "armcnc_start"
         if armcnc_start in dir(launch_file):
             self.armcnc.start()
+            self.package.handwheel.init_serial()
             getattr(launch_file, armcnc_start)(self)
         self.signal_handler(False, False)
 
@@ -44,4 +45,5 @@ class Init:
         if armcnc_exit in dir(launch_file):
             getattr(launch_file, armcnc_exit)(self)
         self.machine.is_alive = False
+        print("------exit------")
         sys.exit()

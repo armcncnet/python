@@ -13,11 +13,11 @@ class Error:
         self.father = father
         self.linuxcnc = linuxcnc
         self.api = self.linuxcnc.error_channel()
-        self.task = threading.Thread(name="error_task", target=self.task)
+        self.task = threading.Thread(name="error_task", target=self.task_work)
         self.task.daemon = True
         self.task.start()
 
-    def task(self):
+    def task_work(self):
         while True:
             if self.father.framework.machine.is_alive:
                 error = self.api.poll()

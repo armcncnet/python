@@ -14,13 +14,13 @@ class Status:
         self.father = father
         self.linuxcnc = linuxcnc
         self.api = linuxcnc.stat()
-        self.task = threading.Thread(name="status_task", target=self.task)
+        self.task = threading.Thread(name="status_task", target=self.task_work)
         self.task.daemon = True
         self.task.start()
 
-    def task(self):
+    def task_work(self):
         while True:
-            if self.father.framework.machine.is_alive:
+            if self.father.framework.machine.is_alive and self.father.framework.utils.service.status:
                 try:
                     self.api.poll()
                 except linuxcnc.error as detail:
@@ -60,9 +60,6 @@ class Status:
                         self.father.framework.machine.task_state = True
                     else:
                         self.father.framework.machine.task_state = False
-
-                    if not self.father.framework.package.handwheel.serial_status:
-                        self.father.framework.package.handwheel.init_serial()
 
                     self.father.framework.utils.service.service_write({"command": "launch:machine:info", "message": "", "data": self.father.framework.machine.info})
             self.father.framework.utils.set_sleep(0.05)
