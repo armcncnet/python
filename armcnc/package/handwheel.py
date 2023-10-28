@@ -88,13 +88,17 @@ class HandWheel:
                     continue
                 self.joy = self.read[0:4]
                 self.joy = self.str2hex(self.joy)
+                print("joy-->", self.joy)
                 self.joy_axis = self.read[8:12]
                 self.joy_axis = self.str2hex(self.joy_axis)
+                print("joy_axis-->", self.joy_axis)
                 self.joy_rate = self.read[12:16]
                 self.joy_rate = self.str2hex(self.joy_rate)
+                print("joy_rate-->", self.joy_rate)
                 if self.first_run:
                     self.last_joy_value = self.joy
                     self.first_run = False
+                print("last_joy_value-->", self.last_joy_value)
                 joy_rate_tmp = 10
                 if self.joy_rate == 171:
                     joy_rate_tmp = 1
