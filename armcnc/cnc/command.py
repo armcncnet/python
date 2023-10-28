@@ -91,4 +91,9 @@ class Command:
             homed = homed and h
         return homed
 
-
+    def is_all_homed(self):
+        axes = len(self.father.framework.machine.axis)
+        for i in range(0, axes):
+            if self.father.framework.machine.info["homed"][i] != 1:
+                return False
+        return True
