@@ -44,9 +44,6 @@ class HandWheel:
             self.serial = serial.Serial()
             self.serial.port = "/dev/ttyUSB0"
             self.serial.baudrate = 19200
-            self.serial.bytesize = 8
-            self.serial.stopbits = serial.STOPBITS_ONE
-            self.serial.parity = serial.PARITY_NONE
             try:
                 self.serial.open()
                 self.task = threading.Thread(name="handwheel_task", target=self.task_work)
