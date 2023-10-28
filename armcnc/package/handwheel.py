@@ -205,13 +205,13 @@ class HandWheel:
     def set_axis_num(self):
         axis = self.package.framework.machine.axis
         self.axis_num = 3
-        if len(axis) < 4:
-            print("set_axis_num return---->", len(axis))
-            return
-        axis_tmp = axis[3]
-        axis_tmp = axis_tmp.upper()
-        if self.package.framework.armcnc.command.is_all_homed() and axis_tmp != "A":
-            self.axis_num = 4
+        # if len(axis) < 4:
+        #     print("set_axis_num return---->", len(axis))
+        #     return
+        # axis_tmp = axis[3]
+        # axis_tmp = axis_tmp.upper()
+        # if self.package.framework.armcnc.command.is_all_homed() and axis_tmp != "A":
+        #     self.axis_num = 4
 
     def str2hex(self, joy):
         data = 0
