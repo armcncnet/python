@@ -60,7 +60,7 @@ class HandWheel:
                     self.info_count_time = 0
                 self.info_count_time = self.info_count_time + 1
                 self.read = ""
-                self.read_count = self.serial.in_waiting
+                self.read_count = self.serial.inWaiting()
                 if self.read_count != 0:
                     read_tmp = self.serial.read(self.read_count)
                     self.read = str(binascii.b2a_hex(read_tmp))[6:34]
