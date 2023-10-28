@@ -76,16 +76,16 @@ class HandWheel:
                     self.info_count_time = 0
                 self.info_count_time = self.info_count_time + 1
                 self.read = ""
-                count = self.serial.inWaiting()
-                if count != 0:
-                    read_tmp = self.serial.read(count)
+                self.read_count = self.serial.inWaiting()
+                if self.read_count != 0:
+                    read_tmp = self.serial.read(self.read_count)
                     print("read_tmp-->", read_tmp)
-                    self.read = binascii.hexlify(read_tmp).decode("utf-8")
+                    self.read = str(binascii.b2a_hex(read_tmp))[6:34]
                     print("read-->", self.read)
                 self.serial.flushInput()
                 self.joy_count_time = self.joy_count_time + 1
                 self.serial.write(self.write)
-                if count == 0:
+                if self.read_count == 0:
                     continue
                 self.joy = self.read[0:4]
                 self.joy = self.str2hex(self.joy)
