@@ -80,6 +80,7 @@ class HandWheel:
                 if self.read_count != 0:
                     read_tmp = self.serial.read(self.read_count)
                     self.read = str(binascii.b2a_hex(read_tmp))[6:34]
+                    print("read-->", self.read)
                 self.serial.flushInput()
                 self.joy_count_time = self.joy_count_time + 1
                 self.serial.write(self.write)
