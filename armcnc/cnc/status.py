@@ -49,7 +49,17 @@ class Status:
                         "state": self.father.framework.machine.info["state"],
                         "interp_state": self.father.framework.machine.info["interp_state"],
                         "task_state": self.father.framework.machine.info["task_state"],
-                        "homed": self.father.framework.machine.info["homed"]
+                        "homed": self.father.framework.machine.info["homed"],
+                        "spindle": {
+                            "enabled": self.father.framework.machine.info["spindle"][0]["enabled"],
+                            "direction": self.father.framework.machine.info["spindle"][0]["direction"],
+                            "speed": self.father.framework.machine.info["spindle"][0]["speed"],
+                            "default_speed": int(inifile.find("DISPLAY", "DEFAULT_SPINDLE_SPEED")),
+                            "min_override": float(inifile.find("DISPLAY", "MIN_SPINDLE_OVERRIDE")),
+                            "max_override": float(inifile.find("DISPLAY", "MAX_SPINDLE_OVERRIDE")),
+                            "override": self.father.framework.machine.info["spindle"][0]["override"],
+                            "override_enabled": self.father.framework.machine.info["spindle"][0]["override_enabled"]
+                        },
                     }
 
                     self.father.framework.machine.info["user_data"] = user_data
