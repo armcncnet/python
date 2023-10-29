@@ -158,7 +158,7 @@ class HandWheel:
                     self.last_joy_speed = 0
                     self.last_jpy_dir = None
                     self.use_joy = False
-            self.package.framework.utils.set_sleep(0.05)
+            self.package.framework.utils.set_sleep(0.1)
 
     def do_joy(self):
         jog_length = 0
