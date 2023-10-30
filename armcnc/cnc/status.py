@@ -39,6 +39,7 @@ class Status:
                         "user": self.father.framework.machine.user,
                         "workspace": self.father.framework.machine.workspace,
                         "machine_path": self.father.framework.machine.machine_path,
+                        "control": int(self.father.framework.machine.get_user_config_value("BASE", "CONTROL") or 0),
                         "increments": [value.replace("mm", "") for value in inifile.find("DISPLAY", "INCREMENTS").split(",")],
                         "coordinates": list(inifile.find("TRAJ", "COORDINATES")) or [],
                         "linear_units": inifile.find("TRAJ", "LINEAR_UNITS") or "mm",
