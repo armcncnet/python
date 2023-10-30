@@ -58,12 +58,7 @@ class HandWheel:
             if self.status:
                 if len(self.joy_speed) == 0:
                     if len(self.package.framework.machine.axis) > 0:
-                        config = configparser.ConfigParser()
-                        config.read(self.package.framework.machine.workspace + "/configs/" + self.package.framework.machine.machine_path + "/machine.user")
-                        items = config.items("HANDWHEEL")
-                        for key, val in items:
-                            key = "EXTINFO_" + key.upper()
-                            self.joy_speed[key] = float(val.strip())
+                        self.joy_speed = self.package.framework.machine.get_user_config_items("EXTINFO")
                     continue
                 if self.joy_count_time > 1:
                     self.do_joy()
@@ -158,7 +153,7 @@ class HandWheel:
                     self.last_joy_speed = 0
                     self.last_jpy_dir = None
                     self.use_joy = False
-            self.package.framework.utils.set_sleep(0.1)
+            self.package.framework.utils.set_sleep(0.04)
 
     def do_joy(self):
         jog_length = 0
