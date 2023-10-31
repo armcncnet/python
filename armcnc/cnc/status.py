@@ -68,7 +68,7 @@ class Status:
                         },
                         "ext_info": self.father.framework.machine.get_user_config_items("EXTINFO"),
                         "max_linear_velocity": float(inifile.find("DISPLAY", "MAX_LINEAR_VELOCITY")),
-                        "linear_velocity": self.father.framework.machine.info["max_velocity"],
+                        "linear_velocity": float(self.father.framework.machine.info["max_velocity"]),
                         "default_linear_velocity": float(inifile.find("DISPLAY", "DEFAULT_LINEAR_VELOCITY")),
                         "max_angular_velocity": float(inifile.find("DISPLAY", "MAX_ANGULAR_VELOCITY")),
                         "default_angular_velocity": float(inifile.find("DISPLAY", "DEFAULT_ANGULAR_VELOCITY"))
