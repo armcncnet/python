@@ -48,7 +48,6 @@ class CNC:
                         self.command.home_all()
                     else:
                         value = int(message["data"])
-                        self.command.set_teleop_enable_mode(0)
                         self.command.home_axis(value)
 
             if message["command"] == "desktop:control:jog:start":

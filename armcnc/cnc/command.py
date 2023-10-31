@@ -115,6 +115,7 @@ class Command:
             self.home_axis(x)
 
     def home_axis(self, axis):
+        self.set_teleop_enable_mode(0)
         if self.father.status.api.task_mode != linuxcnc.MODE_MANUAL:
             self.set_mode(linuxcnc.MODE_MANUAL, 1)
         self.api.home(axis)
