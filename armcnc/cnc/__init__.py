@@ -83,6 +83,14 @@ class CNC:
                     axis = self.framework.machine.get_num(axis)
                 self.command.jog_stop(axis, jog_mode)
 
+            if message["command"] == "desktop:control:spindle":
+                value = message["data"]["value"]
+                self.command.set_spindle(value)
+
+            if message["command"] == "desktop:control:spindle:override":
+                value = message["data"]["value"]
+                self.command.set_spindle_override(value)
+
             if message["command"] == "desktop:control:device:start":
                 self.status.api.poll()
                 if self.status.api.task_state == linuxcnc.STATE_ESTOP:

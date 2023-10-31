@@ -64,6 +64,7 @@ class Status:
                         },
                         "feed": {
                             "max_override": float(inifile.find("DISPLAY", "MAX_FEED_OVERRIDE")),
+                            "rate": float(self.father.framework.machine.info["feedrate"])
                         },
                         "ext_info": self.father.framework.machine.get_user_config_items("EXTINFO")
                     }

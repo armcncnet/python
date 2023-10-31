@@ -43,7 +43,7 @@ class Command:
 
     def get_jog_mode(self):
         self.father.status.api.poll()
-        if self.father.status.api.kinematics_type == linuxcnc.KINEMATICS_IDENTITY and self.all_homed():
+        if self.father.status.api.kinematics_type == linuxcnc.KINEMATICS_IDENTITY and self.is_homed():
             teleop_mode = 1
             mode = False
         elif self.father.status.api.motion_mode == linuxcnc.TRAJ_MODE_FREE:
@@ -76,24 +76,42 @@ class Command:
             mode = self.get_jog_mode()
         self.api.jog(linuxcnc.JOG_STOP, mode, int(axis))
 
+    def set_spindle(self, value):
+        if self.father.framework.machine.task_state:
+            if self.is_manual():
+                return
+            self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
+            if value == 1:
+                self.api.spindle(linuxcnc.SPINDLE_FORWARD, 0)
+            if value == 2:
+                self.api.spindle(linuxcnc.SPINDLE_REVERSE, 0)
+            if value == 3:
+                self.api.spindle(linuxcnc.SPINDLE_INCREASE)
+            if value == 4:
+                self.api.spindle(linuxcnc.SPINDLE_DECREASE)
+            if value == 5:
+                self.api.spindle(linuxcnc.SPINDLE_OFF)
+
+    def set_spindle_override(self, value):
+        if self.father.framework.machine.task_state:
+            value = int(value) / 100.0
+            self.api.spindleoverride(value)
+
     def home_axis(self, axis):
         if self.father.framework.machine.task_state:
             self.set_mode(linuxcnc.MODE_MANUAL, 1)
             self.api.home(axis)
             self.api.wait_complete()
 
-    def all_homed(self):
-        homed = True
-        self.father.status.api.poll()
-        for i, h in enumerate(self.father.status.api.homed):
-            if i >= len(self.father.framework.machine.axis):
-                break
-            homed = homed and h
-        return homed
-
-    def is_all_homed(self):
+    def is_homed(self):
         axes = len(self.father.framework.machine.axis)
         for i in range(0, axes):
             if self.father.framework.machine.info["homed"][i] != 1:
                 return False
         return True
+
+    def is_manual(self):
+        self.father.status.api.poll()
+        if self.father.status.api.task_state != linuxcnc.STATE_ON:
+            return False
+        return self.father.status.api.interp_state == linuxcnc.INTERP_IDLE or self.father.status.api.task_mode == linuxcnc.MODE_MDI

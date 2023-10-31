@@ -45,5 +45,4 @@ class Init:
         if armcnc_exit in dir(launch_file):
             getattr(launch_file, armcnc_exit)(self)
         self.machine.is_alive = False
-        print("------exit------")
         sys.exit()
