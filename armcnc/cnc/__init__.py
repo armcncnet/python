@@ -45,13 +45,7 @@ class CNC:
             if message["command"] == "desktop:control:device:home":
                 if len(self.framework.machine.axis) > 0:
                     if message["data"] == "all":
-                        self.command.set_teleop_enable(0)
-                        # 优先Z轴回零
-                        self.command.home_axis(2)
-                        for x in range(len(self.framework.machine.axis) - 1, -1, -1):
-                            if x == 2:
-                                continue
-                            self.command.home_axis(x)
+                        self.command.home_all()
                     else:
                         value = int(message["data"])
                         self.command.set_teleop_enable_mode(0)
@@ -88,6 +82,14 @@ class CNC:
             if message["command"] == "desktop:control:spindle:override":
                 value = message["data"]["value"]
                 self.command.set_spindle_override(value)
+
+            if message["command"] == "desktop:control:max:velocity":
+                value = message["data"]["value"]
+                self.command.set_max_velocity(value)
+
+            if message["command"] == "desktop:control:feed:rate":
+                value = message["data"]["value"]
+                self.command.set_feed_rate(value)
 
             if message["command"] == "desktop:control:device:start":
                 self.status.api.poll()

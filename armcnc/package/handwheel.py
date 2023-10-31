@@ -8,7 +8,6 @@ import os
 import serial
 import binascii
 import threading
-import configparser
 
 class HandWheel:
 
@@ -201,7 +200,7 @@ class HandWheel:
             return
         axis_tmp = axis[3]
         axis_tmp = axis_tmp.upper()
-        if self.package.framework.armcnc.command.is_all_homed() and axis_tmp != "A":
+        if self.package.framework.armcnc.command.is_homed() and axis_tmp != "A":
             self.axis_num = 4
 
     def str2hex(self, joy):

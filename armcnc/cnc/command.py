@@ -30,15 +30,18 @@ class Command:
         self.api.teleop_enable(value)
         self.api.wait_complete()
 
+    def set_motion_teleop(self, value):
+        self.api.teleop_enable(value)
+        self.api.wait_complete(0.1)
+        self.father.status.api.poll()
+
     def set_teleop_enable_mode(self, value):
         self.father.status.api.poll()
         if self.father.status.api.task_mode != linuxcnc.MODE_MANUAL:
             self.set_mode(linuxcnc.MODE_MANUAL, 1)
         if self.get_jog_mode():
             return
-        self.api.teleop_enable(value)
-        self.api.wait_complete(0.1)
-        self.father.status.api.poll()
+        self.set_motion_teleop(value)
         return True
 
     def get_jog_mode(self):
@@ -77,31 +80,56 @@ class Command:
         self.api.jog(linuxcnc.JOG_STOP, mode, int(axis))
 
     def set_spindle(self, value):
-        if self.father.framework.machine.task_state:
-            if self.is_manual():
-                return
-            self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
-            if value == 1:
-                self.api.spindle(linuxcnc.SPINDLE_FORWARD, 0)
-            if value == 2:
-                self.api.spindle(linuxcnc.SPINDLE_REVERSE, 0)
-            if value == 3:
-                self.api.spindle(linuxcnc.SPINDLE_INCREASE)
-            if value == 4:
-                self.api.spindle(linuxcnc.SPINDLE_DECREASE)
-            if value == 5:
-                self.api.spindle(linuxcnc.SPINDLE_OFF)
+        if self.is_manual():
+            return
+        self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
+        if value == 1:
+            self.api.spindle(linuxcnc.SPINDLE_FORWARD, 0)
+        if value == 2:
+            self.api.spindle(linuxcnc.SPINDLE_REVERSE, 0)
+        if value == 3:
+            self.api.spindle(linuxcnc.SPINDLE_INCREASE)
+        if value == 4:
+            self.api.spindle(linuxcnc.SPINDLE_DECREASE)
+        if value == 5:
+            self.api.spindle(linuxcnc.SPINDLE_OFF)
 
     def set_spindle_override(self, value):
-        if self.father.framework.machine.task_state:
-            value = int(value) / 100.0
-            self.api.spindleoverride(value)
+        value = int(value) / 100.0
+        self.api.spindleoverride(value)
+
+    def set_max_velocity(self, value):
+        value = float(value) / 60
+        self.api.maxvel(value)
+
+    def set_feed_rate(self, value):
+        value = value / 100.0
+        self.api.feedrate(value)
+
+    def home_all(self):
+        self.set_teleop_enable(0)
+        self.home_axis(2)
+        for x in range(len(self.father.framework.machine.axis) - 1, -1, -1):
+            if x == 2:
+                continue
+            self.home_axis(x)
 
     def home_axis(self, axis):
-        if self.father.framework.machine.task_state:
+        if self.father.status.api.task_mode != linuxcnc.MODE_MANUAL:
             self.set_mode(linuxcnc.MODE_MANUAL, 1)
-            self.api.home(axis)
-            self.api.wait_complete()
+        self.api.home(axis)
+        self.api.wait_complete()
+
+    def un_home_all(self):
+        for x in range(len(self.father.framework.machine.axis) - 1, -1, -1):
+            self.un_home_axis(x)
+
+    def un_home_axis(self, axis):
+        self.father.status.api.poll()
+        if self.father.status.api.task_mode != linuxcnc.MODE_MANUAL:
+            self.set_mode(linuxcnc.MODE_MANUAL, 1)
+        self.set_motion_teleop(0)
+        self.api.unhome(axis)
 
     def is_homed(self):
         axes = len(self.father.framework.machine.axis)
