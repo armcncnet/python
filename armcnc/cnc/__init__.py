@@ -40,9 +40,7 @@ class CNC:
                 self.command.api.wait_complete(0.5)
 
             if message["command"] == "desktop:control:device:override_limits":
-                self.command.set_mode(linuxcnc.MODE_MANUAL, 0.5)
-                self.command.api.override_limits()
-                self.command.api.wait_complete(0.5)
+                self.command.override_limits()
 
             if message["command"] == "desktop:control:device:home":
                 if len(self.framework.machine.axis) > 0:

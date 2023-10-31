@@ -115,3 +115,9 @@ class Command:
         if self.father.status.api.task_state != linuxcnc.STATE_ON:
             return False
         return self.father.status.api.interp_state == linuxcnc.INTERP_IDLE or self.father.status.api.task_mode == linuxcnc.MODE_MDI
+
+    def override_limits(self):
+        self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
+        self.api.override_limits()
+        self.api.wait_complete(0.5)
+
