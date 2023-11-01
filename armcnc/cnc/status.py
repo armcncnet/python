@@ -41,8 +41,11 @@ class Status:
                         "machine_path": self.father.framework.machine.machine_path,
                         "control": int(self.father.framework.machine.get_user_config_value("BASE", "CONTROL") or 0),
                         "increments": [value.replace("mm", "") for value in inifile.find("DISPLAY", "INCREMENTS").split(",")],
-                        "axis": [],
-                        "axis_velocity": [],
+                        "axis": {},
+                        "g_offset": {},
+                        "g5x_offset": {},
+                        "g92_offset": {},
+                        "axis_velocity": {},
                         "axes": list(inifile.find("TRAJ", "COORDINATES")) or [],
                         "linear_units": inifile.find("TRAJ", "LINEAR_UNITS") or "mm",
                         "angular_units": inifile.find("TRAJ", "ANGULAR_UNITS") or "degree",
@@ -103,7 +106,7 @@ class Status:
                         g92_offset = g92_offset_tmp[axis_num]
                         g92_offset = "{:.3f}".format(g92_offset)
                         user_data["g92_offset"][i] = g92_offset
-                        user_data["axis_velocity"][i] = int(axis_tmp[i]['velocity']) * 60
+                        user_data["axis_velocity"][i] = int(axis_tmp[i]['velocity'])
 
                     if user_data["task_state"] == 4:
                         self.father.framework.machine.task_state = True
