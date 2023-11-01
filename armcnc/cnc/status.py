@@ -51,6 +51,7 @@ class Status:
                         "interp_state": self.father.framework.machine.info["interp_state"],
                         "task_state": self.father.framework.machine.info["task_state"],
                         "homed": self.father.framework.machine.info["homed"],
+                        "offset": self.father.framework.machine.set_offset(self.father.framework.machine.info["g5x_index"], self.father.framework.machine.info["g5x_offset"], self.father.framework.machine.info["g92_offset"]),
                         "spindle": {
                             "enabled": self.father.framework.machine.info["spindle"][0]["enabled"],
                             "direction": self.father.framework.machine.info["spindle"][0]["direction"],

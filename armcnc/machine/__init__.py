@@ -15,9 +15,22 @@ class Machine:
         self.axis_tmp = ""
         self.is_alive = False
         self.info = None
+        self.offset = {"index": 0, "value": [], "g_offset": [], "options": []}
         self.machine_path = ""
         self.workspace = "/opt/armcnc"
         self.task_state = False
+
+    def set_offset(self, index, value, g_offset):
+        self.offset["index"] = index
+        self.offset["value"] = value
+        self.offset["g_offset"] = g_offset
+        if len(self.offset["options"]) == 0:
+            for key, val in range(9):
+                if key > 5:
+                    self.offset["options"].append({"label": "P" + key + " G59." + (key - 6), "value": key})
+                else:
+                    self.offset["options"].append({"label": "P" + key + " G5" + (key + 3), "value": key})
+        return self.offset
 
     def get_num_axis(self, axis):
         self.axis_tmp = ''.join(self.axis)
