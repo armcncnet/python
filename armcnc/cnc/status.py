@@ -54,7 +54,7 @@ class Status:
                         "homed": self.father.framework.machine.info["homed"],
                         "is_homed": self.father.framework.armcnc.command.is_homed(),
                         "motion_line": self.father.framework.machine.info["motion_line"],
-                        "current_velocity": int(self.father.framework.machine.info["current_vel"]),
+                        "current_velocity": float(self.father.framework.machine.info["current_vel"]),
                         "spindle": {
                             "enabled": self.father.framework.machine.info["spindle"][0]["enabled"],
                             "direction": self.father.framework.machine.info["spindle"][0]["direction"],
