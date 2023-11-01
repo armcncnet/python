@@ -101,7 +101,7 @@ class Status:
                         g92_offset = g92_offset_tmp[axis_num]
                         g92_offset = "{:.3f}".format(g92_offset)
                         user_data["data"]["g92_offset"][i] = g92_offset
-                        user_data["data"]["velocity"][i] = int(axis_tmp[i]['velocity'])
+                        user_data["data"]["velocity"][i] = axis_tmp[i]["velocity"]
 
                     if user_data["task_state"] == 4:
                         self.father.framework.machine.task_state = True
