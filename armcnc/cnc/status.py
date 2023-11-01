@@ -41,7 +41,7 @@ class Status:
                         "machine_path": self.father.framework.machine.machine_path,
                         "control": int(self.father.framework.machine.get_user_config_value("BASE", "CONTROL") or 0),
                         "increments": [value.replace("mm", "") for value in inifile.find("DISPLAY", "INCREMENTS").split(",")],
-                        "coordinates": list(inifile.find("TRAJ", "COORDINATES")) or [],
+                        "axes": list(inifile.find("TRAJ", "COORDINATES")) or [],
                         "linear_units": inifile.find("TRAJ", "LINEAR_UNITS") or "mm",
                         "angular_units": inifile.find("TRAJ", "ANGULAR_UNITS") or "degree",
                         "estop": self.father.framework.machine.info["estop"],
@@ -52,6 +52,8 @@ class Status:
                         "task_state": self.father.framework.machine.info["task_state"],
                         "homed": self.father.framework.machine.info["homed"],
                         "is_homed": self.father.framework.armcnc.command.is_homed(),
+                        "motion_line": self.father.framework.machine.info["motion_line"],
+                        "current_vel": int(self.father.framework.machine.info["current_vel"]),
                         "offset": self.father.framework.machine.set_offset(self.father.framework.machine.info["g5x_index"], self.father.framework.machine.info["g5x_offset"], self.father.framework.machine.info["g92_offset"]),
                         "spindle": {
                             "enabled": self.father.framework.machine.info["spindle"][0]["enabled"],
@@ -78,7 +80,7 @@ class Status:
 
                     self.father.framework.machine.info["user_data"] = user_data
 
-                    self.father.framework.machine.axis = user_data["coordinates"]
+                    self.father.framework.machine.axes = user_data["axes"]
 
                     if user_data["task_state"] == 4:
                         self.father.framework.machine.task_state = True

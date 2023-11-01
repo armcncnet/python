@@ -109,7 +109,7 @@ class Command:
     def home_all(self):
         self.set_teleop_enable(0)
         self.home_axis(2)
-        for x in range(len(self.father.framework.machine.axis) - 1, -1, -1):
+        for x in range(len(self.father.framework.machine.axes) - 1, -1, -1):
             if x == 2:
                 continue
             self.home_axis(x)
@@ -120,7 +120,7 @@ class Command:
         self.api.wait_complete()
 
     def un_home_all(self):
-        for x in range(len(self.father.framework.machine.axis) - 1, -1, -1):
+        for x in range(len(self.father.framework.machine.axes) - 1, -1, -1):
             self.un_home_axis(x)
 
     def un_home_axis(self, axis):
@@ -131,7 +131,7 @@ class Command:
         self.api.unhome(axis)
 
     def is_homed(self):
-        axes = len(self.father.framework.machine.axis)
+        axes = len(self.father.framework.machine.axes)
         for i in range(0, axes):
             if self.father.framework.machine.info["homed"][i] != 1:
                 return False

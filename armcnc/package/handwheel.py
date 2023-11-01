@@ -56,7 +56,7 @@ class HandWheel:
         while True:
             if self.status:
                 if len(self.joy_speed) == 0:
-                    if len(self.package.framework.machine.axis) > 0:
+                    if len(self.package.framework.machine.axes) > 0:
                         self.joy_speed = self.package.framework.machine.get_user_config_items("EXTINFO")
                     continue
                 if self.joy_count_time > 1:
@@ -194,7 +194,7 @@ class HandWheel:
         return joy_speed / 60
 
     def set_axis_num(self):
-        axis = self.package.framework.machine.axis
+        axis = self.package.framework.machine.axes
         self.axis_num = 3
         if len(axis) < 4:
             return

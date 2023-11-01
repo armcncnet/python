@@ -11,8 +11,8 @@ class Machine:
     def __init__(self, framework):
         self.framework = framework
         self.user = "armcnc"
-        self.axis = []
-        self.axis_tmp = ""
+        self.axes = []
+        self.axes_tmp = ""
         self.is_alive = False
         self.info = None
         self.offset = {"index": 0, "value": [], "g_offset": [], "options": []}
@@ -32,14 +32,14 @@ class Machine:
                     self.offset["options"].append({"label": "P" + str(key) + " G5" + str(key + 3), "value": key, "name": "G5" + str(key + 3)})
         return self.offset
 
-    def get_num_axis(self, axis):
-        self.axis_tmp = ''.join(self.axis)
-        num = self.axis_tmp.find(axis.upper())
+    def get_num_axis(self, axes):
+        self.axes_tmp = ''.join(self.axes)
+        num = self.axes_tmp.find(axes.upper())
         return num
 
-    def get_num(self, axis):
-        self.axis_tmp = "XYZABCUVW"
-        num = self.axis_tmp.find(axis.upper())
+    def get_num(self, axes):
+        self.axes_tmp = "XYZABCUVW"
+        num = self.axes_tmp.find(axes.upper())
         return num
 
     def get_user_config_value(self, father, value):

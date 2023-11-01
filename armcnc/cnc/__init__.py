@@ -43,7 +43,7 @@ class CNC:
                 self.command.override_limits()
 
             if message["command"] == "desktop:control:device:home":
-                if len(self.framework.machine.axis) > 0:
+                if len(self.framework.machine.axes) > 0:
                     if message["data"] == "all":
                         self.command.home_all()
                     else:
