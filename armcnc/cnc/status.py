@@ -84,6 +84,7 @@ class Status:
                     g_offset_tmp = copy.copy(self.father.framework.machine.info["actual_position"])
                     g5x_offset_tmp = copy.copy(self.father.framework.machine.info["g5x_offset"])
                     g92_offset_tmp = copy.copy(self.father.framework.machine.info["g92_offset"])
+                    dtg_offset_tmp = copy.copy(self.father.framework.machine.info["dtg"])
                     for i in range(0, len(user_data["axes"])):
                         actual_position = self.father.framework.machine.info["actual_position"]
                         axis_name = user_data["axes"][i]
@@ -101,7 +102,17 @@ class Status:
                         g92_offset = g92_offset_tmp[axis_num]
                         g92_offset = "{:.3f}".format(g92_offset)
                         user_data["data"]["g92_offset"][i] = g92_offset
-                        user_data["data"]["velocity"][i] = axis_tmp[i]["velocity"]
+                        dtg_offset = dtg_offset_tmp[axis_num]
+                        dtg_offset = "{:.3f}".format(dtg_offset)
+                        user_data["data"]["dtg_offset"][i] = dtg_offset
+                        user_data["data"]["velocity"][i] = axis_tmp[axis_num]["velocity"]
+
+                    user_data["data"]["tool"] = {
+                        "id": self.father.framework.machine.info["tool_table"][0].id,
+                        "offset": self.father.framework.machine.info["tool_table"][0].zoffset,
+                        "diameter": self.father.framework.machine.info["tool_table"][0].diameter,
+                        "item": self.father.framework.machine.info["tool_table"][0]
+                    }
 
                     if user_data["task_state"] == 4:
                         self.father.framework.machine.task_state = True
@@ -111,4 +122,4 @@ class Status:
                     self.father.framework.machine.info["user_data"] = user_data
 
                     self.father.framework.utils.service.service_write({"command": "launch:machine:info", "message": "", "data": self.father.framework.machine.info})
-            self.father.framework.utils.set_sleep(0.05)
+            self.father.framework.utils.set_sleep(0.02)

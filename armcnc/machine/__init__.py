@@ -16,7 +16,7 @@ class Machine:
         self.axis_tmp = ""
         self.is_alive = False
         self.info = None
-        self.data = {"index": 0, "position": {}, "velocity": {}, "g_offset": {}, "g5x_offset": {}, "g92_offset": {}, "options": []}
+        self.data = {"index": 0, "position": {}, "velocity": {}, "g_offset": {}, "g5x_offset": {}, "g92_offset": {}, "dtg_offset": {}, "tool": {}, "options": []}
         self.machine_path = ""
         self.workspace = "/opt/armcnc"
         self.task_state = False
