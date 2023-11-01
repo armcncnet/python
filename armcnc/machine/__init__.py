@@ -27,9 +27,9 @@ class Machine:
         if len(self.offset["options"]) == 0:
             for key, val in enumerate(range(10)):
                 if key > 6:
-                    self.offset["options"].append({"label": "P" + str(key) + " G59." + str(key - 7), "value": key})
+                    self.offset["options"].append({"label": "P" + str(key) + " G59." + str((key - 7) + 1), "value": key, "name": "G59." + str((key - 7) + 1)})
                 else:
-                    self.offset["options"].append({"label": "P" + str(key) + " G5" + str(key + 3), "value": key})
+                    self.offset["options"].append({"label": "P" + str(key) + " G5" + str(key + 3), "value": key, "name": "G5" + str(key + 3)})
         return self.offset
 
     def get_num_axis(self, axis):
