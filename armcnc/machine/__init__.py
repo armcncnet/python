@@ -21,7 +21,7 @@ class Machine:
         self.workspace = "/opt/armcnc"
         self.task_state = False
 
-    def get_data(self, index):
+    def set_data(self, index):
         self.data["index"] = index
         if len(self.data["options"]) == 0:
             for key, val in enumerate(range(10)):
@@ -29,6 +29,9 @@ class Machine:
                     self.data["options"].append({"label": "P" + str(key) + " G59." + str((key - 7) + 1), "value": key, "name": "G59." + str((key - 7) + 1)})
                 else:
                     self.data["options"].append({"label": "P" + str(key) + " G5" + str(key + 3), "value": key, "name": "G5" + str(key + 3)})
+        return self.data
+
+    def get_data(self):
         return self.data
 
     def get_axes_num(self, axes):

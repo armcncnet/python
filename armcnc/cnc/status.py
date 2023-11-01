@@ -42,7 +42,7 @@ class Status:
                         "control": int(self.father.framework.machine.get_user_config_value("BASE", "CONTROL") or 0),
                         "increments": [value.replace("mm", "") for value in inifile.find("DISPLAY", "INCREMENTS").split(",")],
                         "axes": list(inifile.find("TRAJ", "COORDINATES")) or [],
-                        "data": self.father.framework.machine.get_data(self.father.framework.machine.info["g5x_index"]),
+                        "data": self.father.framework.machine.set_data(self.father.framework.machine.info["g5x_index"]),
                         "linear_units": inifile.find("TRAJ", "LINEAR_UNITS") or "mm",
                         "angular_units": inifile.find("TRAJ", "ANGULAR_UNITS") or "degree",
                         "estop": self.father.framework.machine.info["estop"],
