@@ -55,9 +55,9 @@ class CNC:
                 speed = message["data"]["speed"]
                 jog_mode = self.command.get_jog_mode()
                 if jog_mode:
-                    axis = self.framework.machine.get_num_axis(axis)
+                    axis = self.framework.machine.get_axes_num(axis)
                 else:
-                    axis = self.framework.machine.get_num(axis)
+                    axis = self.framework.machine.get_axis_num(axis)
                 speed = speed / 60
                 increment = message["data"]["increment"]
                 if increment == -1:
@@ -69,9 +69,9 @@ class CNC:
                 axis = message["data"]["axis"]
                 jog_mode = self.command.get_jog_mode()
                 if jog_mode:
-                    axis = self.framework.machine.get_num_axis(axis)
+                    axis = self.framework.machine.get_axes_num(axis)
                 else:
-                    axis = self.framework.machine.get_num(axis)
+                    axis = self.framework.machine.get_axis_num(axis)
                 self.command.jog_stop(axis, jog_mode)
 
             if message["command"] == "desktop:control:spindle":

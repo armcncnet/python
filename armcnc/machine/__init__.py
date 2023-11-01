@@ -13,33 +13,32 @@ class Machine:
         self.user = "armcnc"
         self.axes = []
         self.axes_tmp = ""
+        self.axis_tmp = ""
         self.is_alive = False
         self.info = None
-        self.offset = {"index": 0, "value": [], "g_offset": [], "options": []}
+        self.data = {"index": 0, "position": {}, "velocity": {}, "g_offset": {}, "g5x_offset": {}, "g92_offset": {}, "options": []}
         self.machine_path = ""
         self.workspace = "/opt/armcnc"
         self.task_state = False
 
-    def set_offset(self, index, value, g_offset):
-        self.offset["index"] = index
-        self.offset["value"] = value
-        self.offset["g_offset"] = g_offset
-        if len(self.offset["options"]) == 0:
+    def get_data(self, index):
+        self.data["index"] = index
+        if len(self.data["options"]) == 0:
             for key, val in enumerate(range(10)):
                 if key > 6:
-                    self.offset["options"].append({"label": "P" + str(key) + " G59." + str((key - 7) + 1), "value": key, "name": "G59." + str((key - 7) + 1)})
+                    self.data["options"].append({"label": "P" + str(key) + " G59." + str((key - 7) + 1), "value": key, "name": "G59." + str((key - 7) + 1)})
                 else:
-                    self.offset["options"].append({"label": "P" + str(key) + " G5" + str(key + 3), "value": key, "name": "G5" + str(key + 3)})
-        return self.offset
+                    self.data["options"].append({"label": "P" + str(key) + " G5" + str(key + 3), "value": key, "name": "G5" + str(key + 3)})
+        return self.data
 
-    def get_num_axis(self, axes):
+    def get_axes_num(self, axes):
         self.axes_tmp = ''.join(self.axes)
         num = self.axes_tmp.find(axes.upper())
         return num
 
-    def get_num(self, axes):
-        self.axes_tmp = "XYZABCUVW"
-        num = self.axes_tmp.find(axes.upper())
+    def get_axis_num(self, axis):
+        self.axis_tmp = "XYZABCUVW"
+        num = self.axis_tmp.find(axis.upper())
         return num
 
     def get_user_config_value(self, father, value):
