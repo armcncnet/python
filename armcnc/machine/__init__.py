@@ -25,11 +25,11 @@ class Machine:
         self.offset["value"] = value
         self.offset["g_offset"] = g_offset
         if len(self.offset["options"]) == 0:
-            for key, val in range(9):
-                if key > 5:
-                    self.offset["options"].append({"label": "P" + key + " G59." + (key - 6), "value": key})
+            for key, val in enumerate(range(10)):
+                if key > 6:
+                    self.offset["options"].append({"label": "P" + str(key) + " G59." + str(key - 7), "value": key})
                 else:
-                    self.offset["options"].append({"label": "P" + key + " G5" + (key + 3), "value": key})
+                    self.offset["options"].append({"label": "P" + str(key) + " G5" + str(key + 3), "value": key})
         return self.offset
 
     def get_num_axis(self, axis):
