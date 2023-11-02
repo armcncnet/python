@@ -52,10 +52,7 @@ class CNC:
 
             if message["command"] == "desktop:control:relative:offset":
                 if len(self.framework.machine.axes) > 0:
-                    if message["data"]["id"] == "all":
-                        self.command.set_axis_offset_all(message["data"])
-                    else:
-                        self.command.set_axis_offset(message["data"])
+                    self.command.set_axis_offset(message["data"])
 
             if message["command"] == "desktop:control:jog:start":
                 axis = message["data"]["axis"]
