@@ -111,7 +111,7 @@ class Command:
 
     def set_axis_offset_all(self, data):
         for x in range(0, len(self.father.framework.machine.axes)):
-            key = self.father.framework.machine.get_axis_num(x)
+            key = self.father.framework.machine.get_axis_name(x)
             self.set_axis_offset({"id": key, "p_name": data["p_name"], "value": data["value"]})
 
     def set_axis_offset(self, data):

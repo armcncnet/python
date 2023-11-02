@@ -44,6 +44,11 @@ class Machine:
         num = self.axis_tmp.find(axis.upper())
         return num
 
+    def get_axis_name(self, num):
+        self.axis_tmp = "XYZABCUVW"
+        name = self.axis_tmp[num]
+        return name
+
     def get_user_config_value(self, father, value):
         config = configparser.ConfigParser()
         config.read(self.workspace + "/configs/" + self.machine_path + "/machine.user")
