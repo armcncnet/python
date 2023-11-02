@@ -14,7 +14,10 @@ class Command:
         self.api = self.linuxcnc.command()
 
     def set_mdi(self, command):
-        self.api.setMdi(command)
+        self.father.status.api.poll()
+        if not self.father.status.api.estop and self.father.status.api.enabled and self.father.status.api.homed.count(1) == len(self.father.framework.machine.axes) and self.father.status.api.interp_state == linuxcnc.INTERP_IDLE:
+            self.set_mode(linuxcnc.MODE_MDI, 0.5)
+            self.api.mdi(command)
 
     def set_mode(self, m, t, *p):
         self.father.status.api.poll()
