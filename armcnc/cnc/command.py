@@ -13,6 +13,9 @@ class Command:
         self.linuxcnc = linuxcnc
         self.api = self.linuxcnc.command()
 
+    def set_mdi(self, command):
+        self.api.setMdi(command)
+
     def set_mode(self, m, t, *p):
         self.father.status.api.poll()
         if self.father.status.api.task_mode == m or self.father.status.api.task_mode in p:
@@ -105,6 +108,19 @@ class Command:
     def set_feed_rate(self, value):
         value = value / 100.0
         self.api.feedrate(value)
+
+    def set_axis_offset_all(self, data):
+        for x in range(0, len(self.father.framework.machine.axes)):
+            key = self.father.framework.machine.get_axis_num(x)
+            self.set_axis_offset({"id": key, "p_name": data["p_name"], "value": data["value"]})
+
+    def set_axis_offset(self, data):
+        axis = data["id"]
+        length = float(data["value"])
+        p_name = data["p_name"]
+        command = 'G10 L20 ' + p_name + ' ' + axis + str(length)
+        self.set_mdi(command)
+        self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
 
     def home_all(self):
         self.set_teleop_enable(0)

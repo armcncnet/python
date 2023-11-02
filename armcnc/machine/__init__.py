@@ -26,9 +26,9 @@ class Machine:
         if len(self.data["options"]) == 0:
             for key, val in enumerate(range(10)):
                 if key > 6:
-                    self.data["options"].append({"label": "P" + str(key) + " G59." + str((key - 7) + 1), "value": key, "name": "G59." + str((key - 7) + 1)})
+                    self.data["options"].append({"label": "P" + str(key) + " G59." + str((key - 7) + 1), "p_name": "P" + str(key), "value": key, "name": "G59." + str((key - 7) + 1)})
                 else:
-                    self.data["options"].append({"label": "P" + str(key) + " G5" + str(key + 3), "value": key, "name": "G5" + str(key + 3)})
+                    self.data["options"].append({"label": "P" + str(key) + " G5" + str(key + 3), "p_name": "P" + str(key), "value": key, "name": "G5" + str(key + 3)})
         return self.data
 
     def get_data(self):
