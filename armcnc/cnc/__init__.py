@@ -50,6 +50,10 @@ class CNC:
                         value = int(message["data"])
                         self.command.home_axis(value)
 
+            if message["command"] == "desktop:control:set:offset":
+                if len(self.framework.machine.axes) > 0:
+                    self.command.set_offset(message["data"])
+
             if message["command"] == "desktop:control:relative:offset":
                 if len(self.framework.machine.axes) > 0:
                     self.command.set_axis_offset(message["data"])

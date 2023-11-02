@@ -13,9 +13,13 @@ class Command:
         self.linuxcnc = linuxcnc
         self.api = self.linuxcnc.command()
 
+    def check_mdi(self):
+        self.father.status.api.poll()
+        return not self.father.status.api.estop and self.father.status.api.enabled and self.father.status.api.homed.count(1) == len(self.father.framework.machine.axes) and self.father.status.api.interp_state == linuxcnc.INTERP_IDLE
+
     def set_mdi(self, command):
         self.father.status.api.poll()
-        if not self.father.status.api.estop and self.father.status.api.enabled and self.father.status.api.homed.count(1) == len(self.father.framework.machine.axes) and self.father.status.api.interp_state == linuxcnc.INTERP_IDLE:
+        if self.check_mdi():
             self.set_mode(linuxcnc.MODE_MDI, 0.5)
             self.api.mdi(command)
 
@@ -111,6 +115,11 @@ class Command:
     def set_feed_rate(self, value):
         value = value / 100.0
         self.api.feedrate(value)
+
+    def set_offset(self, data):
+        command = data["name"]
+        self.set_mdi(command)
+        self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
 
     def set_axis_offset(self, data):
         command = "G10 L20 " + data["name"] + " X" + data["x"] + " Y" + data["y"] + " Z" + data["z"]
