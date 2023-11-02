@@ -69,6 +69,38 @@ class Command:
             self.set_teleop_enable(teleop_mode)
         return mode
 
+    def on_start(self, line):
+        self.father.status.api.poll()
+        if self.father.status.api.paused:
+            self.on_restart()
+            return False
+        # 后续需要增加持久化存储
+        self.set_mode(linuxcnc.MODE_AUTO, 0)
+        if self.father.status.api.interp_state != linuxcnc.INTERP_IDLE:
+            return False
+        self.api.auto(linuxcnc.AUTO_RUN, int(line))
+
+    def on_restart(self):
+        self.father.status.api.poll()
+        if not self.father.status.api.paused:
+            return False
+        if self.father.status.api.task_mode not in (linuxcnc.MODE_AUTO, linuxcnc.MODE_MDI):
+            return False
+        self.set_mode(linuxcnc.MODE_AUTO, 0.5, linuxcnc.MODE_MDI)
+        self.api.auto(linuxcnc.AUTO_RESUME)
+
+    def on_pause(self):
+        self.father.status.api.poll()
+        if self.father.status.api.task_mode != linuxcnc.MODE_AUTO or self.father.status.api.interp_state not in (linuxcnc.INTERP_READING, linuxcnc.INTERP_WAITING):
+            return False
+        self.api.auto(linuxcnc.AUTO_PAUSE)
+
+    def on_stop(self):
+        self.set_mode(linuxcnc.MODE_AUTO, 0.5)
+        self.api.abort()
+        self.api.wait_complete()
+        # 后续需要增加换刀信号的触发
+
     def jog_continuous(self, axis, speed, mode):
         if self.father.framework.machine.task_state:
             if mode == "":

@@ -39,6 +39,15 @@ class CNC:
                         self.command.api.state(linuxcnc.STATE_ESTOP)
                 self.command.api.wait_complete(0.5)
 
+            if message["command"] == "desktop:control:start":
+                self.command.on_start(message["data"]["line"])
+
+            if message["command"] == "desktop:control:pause":
+                self.command.on_pause()
+
+            if message["command"] == "desktop:control:stop":
+                self.command.on_stop()
+
             if message["command"] == "desktop:control:device:override_limits":
                 self.command.override_limits()
 
