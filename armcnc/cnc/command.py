@@ -200,3 +200,8 @@ class Command:
         self.api.override_limits()
         self.api.wait_complete(0.5)
 
+    def program_open(self, file):
+        self.set_mode(linuxcnc.MODE_AUTO, 0)
+        self.api.program_open(self.father.framework.machine.workspace + "/files/" + file)
+        self.api.wait_complete(0.5)
+        self.set_mode(linuxcnc.MODE_MANUAL, 0.5)

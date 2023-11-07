@@ -117,3 +117,7 @@ class CNC:
                     if self.status.api.task_state == linuxcnc.STATE_OFF or self.status.api.task_state == linuxcnc.STATE_ESTOP_RESET:
                         self.command.api.state(linuxcnc.STATE_ON)
                 self.command.api.wait_complete(0.5)
+
+            if message["command"] == "desktop:program:open":
+                if message["data"] != "":
+                    self.command.program_open(message["data"])
