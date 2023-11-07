@@ -202,6 +202,13 @@ class Command:
 
     def program_open(self, file):
         self.set_mode(linuxcnc.MODE_AUTO, 0)
-        self.api.program_open(self.father.framework.machine.workspace + "/files/" + file)
+        try:
+            self.api.program_open(self.father.framework.machine.workspace + "/files/" + file)
+        except linuxcnc.error as e:
+            self.father.framework.utils.service.service_write({"command": "launch:program:open", "message": "", "data": False})
+            self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
+            return False
         self.api.wait_complete(0.5)
         self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
+        self.father.framework.utils.service.service_write({"command": "launch:program:open", "message": "", "data": True})
+
