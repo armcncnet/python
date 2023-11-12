@@ -59,8 +59,8 @@ class Status:
                             "enabled": self.father.framework.machine.info["spindle"][0]["enabled"],
                             "direction": self.father.framework.machine.info["spindle"][0]["direction"],
                             "speed": self.father.framework.machine.info["spindle"][0]["speed"],
-                            "max_speed": int(self.father.framework.machine.get_user_config_value("SPINDLE", "MAX_SPEED") or 24000),
-                            "default_speed": int(inifile.find("DISPLAY", "DEFAULT_SPINDLE_SPEED")),
+                            "min_velocity": int(inifile.find("SPINDLE_0", "MIN_FORWARD_VELOCITY") or 0),
+                            "max_velocity": int(inifile.find("SPINDLE_0", "MAX_FORWARD_VELOCITY") or 24000),
                             "min_override": float(inifile.find("DISPLAY", "MIN_SPINDLE_OVERRIDE")),
                             "max_override": float(inifile.find("DISPLAY", "MAX_SPINDLE_OVERRIDE")),
                             "override": self.father.framework.machine.info["spindle"][0]["override"],
@@ -68,7 +68,7 @@ class Status:
                         },
                         "feed": {
                             "max_override": float(inifile.find("DISPLAY", "MAX_FEED_OVERRIDE")),
-                            "rate": float(self.father.framework.machine.info["feedrate"])
+                            "override": float(self.father.framework.machine.info["feedrate"])
                         },
                         "ext_info": self.father.framework.machine.get_user_config_items("EXTINFO"),
                         "max_linear_velocity": float(inifile.find("DISPLAY", "MAX_LINEAR_VELOCITY")),
