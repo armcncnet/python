@@ -189,13 +189,13 @@ class HandWheel:
     def get_joy_speed(self, axis):
         joy_speed = 1000
         if axis == 0:
-            joy_speed = self.joy_speed["X_VELOCITY"]
+            joy_speed = float(self.joy_speed["X_VELOCITY"])
         elif axis == 1:
-            joy_speed = self.joy_speed["Y_VELOCITY"]
+            joy_speed = float(self.joy_speed["Y_VELOCITY"])
         elif axis == 2:
-            joy_speed = self.joy_speed["Z_VELOCITY"]
+            joy_speed = float(self.joy_speed["Z_VELOCITY"])
         else:
-            joy_speed = self.joy_speed["A_VELOCITY"]
+            joy_speed = float(self.joy_speed["A_VELOCITY"])
         return joy_speed / 60
 
     def set_axis_num(self):

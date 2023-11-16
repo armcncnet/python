@@ -52,7 +52,7 @@ class Machine:
     def get_user_config_value(self, father, value):
         config = configparser.ConfigParser()
         config.read(self.workspace + "/configs/" + self.machine_path + "/machine.user")
-        return config[father][value]
+        return config[father][value].strip()
 
     def get_user_config_items(self, father):
         configs = {}
@@ -60,5 +60,5 @@ class Machine:
         config.read(self.workspace + "/configs/" + self.machine_path + "/machine.user")
         items = config.items(father)
         for key, val in items:
-            configs[key] = float(val.strip())
+            configs[key] = val.strip()
         return configs
