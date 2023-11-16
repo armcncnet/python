@@ -24,8 +24,7 @@ class Status:
                 try:
                     self.api.poll()
                 except linuxcnc.error as detail:
-                    self.father.framework.utils.service.service_write(
-                        {"command": "launch:machine:error", "message": detail, "data": False})
+                    self.father.framework.utils.service.service_write({"command": "launch:machine:error", "message": detail, "data": False})
 
                 self.father.framework.machine.info = {}
                 for x in dir(self.api):
