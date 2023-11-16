@@ -60,7 +60,5 @@ class Machine:
         config.read(self.workspace + "/configs/" + self.machine_path + "/machine.user")
         items = config.items(father)
         for key, val in items:
-            if father == "HANDWHEEL":
-                key = "HANDWHEEL_" + key.upper()
             configs[key] = float(val.strip())
         return configs
