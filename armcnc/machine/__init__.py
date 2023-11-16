@@ -60,5 +60,6 @@ class Machine:
         config.read(self.workspace + "/configs/" + self.machine_path + "/machine.user")
         items = config.items(father)
         for key, val in items:
+            key = key.upper()
             configs[key] = val.strip()
         return configs
