@@ -55,6 +55,7 @@ class HandWheel:
     def task_work(self):
         while True:
             if self.status:
+                print("->", self.joy_speed)
                 if len(self.joy_speed) == 0:
                     if len(self.package.framework.machine.axes) > 0:
                         self.joy_speed = self.package.framework.machine.get_user_config_items("HANDWHEEL")
