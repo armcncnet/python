@@ -58,11 +58,7 @@ class HandWheel:
                 if len(self.joy_speed) == 0:
                     if len(self.package.framework.machine.axes) > 0:
                         self.joy_speed = self.package.framework.machine.get_user_config_items("HANDWHEEL")
-                        if self.joy_speed["STATUS"] == "NO":
-                            self.serial.close()
-                            self.joy_speed = {}
-                            self.status = False
-                            break
+                        print("->", self.joy_speed)
                     continue
                 if self.joy_count_time > 1:
                     self.do_joy()
