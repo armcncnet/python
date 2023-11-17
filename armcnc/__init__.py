@@ -18,16 +18,15 @@ class Init:
         signal.signal(signal.SIGINT, self.signal_handler)
         signal.signal(signal.SIGTERM, self.signal_handler)
         self.utils = Utils(self)
-        self.package = Package(self)
         self.machine = Machine(self)
         self.armcnc = CNC(self)
+        self.package = Package(self)
         self.start()
 
     def start(self):
         armcnc_start = "armcnc_start"
         if armcnc_start in dir(launch_file):
             self.armcnc.start()
-            self.package.handwheel.init_serial()
             getattr(launch_file, armcnc_start)(self)
         self.signal_handler(False, False)
 

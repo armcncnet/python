@@ -38,7 +38,7 @@ class HandWheel:
         self.last_jpy_dir = None
         self.last_joy_dir_count = 0
 
-    def init_serial(self):
+    def start(self):
         if os.path.exists("/dev/ttyUSB0"):
             self.serial = serial.Serial()
             self.serial.port = "/dev/ttyUSB0"
@@ -52,18 +52,15 @@ class HandWheel:
             except serial.SerialException as e:
                 self.status = False
 
+    def stop(self):
+        if self.status:
+            self.serial.close()
+            self.joy_speed = {}
+            self.status = False
+
     def task_work(self):
         while True:
             if self.status:
-                if len(self.joy_speed) == 0:
-                    if len(self.package.framework.machine.axes) > 0:
-                        self.joy_speed = self.package.framework.machine.get_user_config_items("HANDWHEEL")
-                        if self.joy_speed["STATUS"] == "NO":
-                            self.serial.close()
-                            self.joy_speed = {}
-                            self.status = False
-                            break
-                    continue
                 if self.joy_count_time > 1:
                     self.do_joy()
                     self.joy_count_time = 0
@@ -98,7 +95,6 @@ class HandWheel:
                 elif self.joy_rate == 0:
                     joy_rate_tmp = 100
                 if self.last_joy_value != self.joy:
-                    step_tmp = 0
                     step_tmp = self.joy - self.last_joy_value
                     self.last_joy_value = self.joy
                     if step_tmp > 30000:
@@ -187,7 +183,6 @@ class HandWheel:
         return float(jog_length) / 100
 
     def get_joy_speed(self, axis):
-        joy_speed = 1000
         if axis == 0:
             joy_speed = float(self.joy_speed["X_VELOCITY"])
         elif axis == 1:

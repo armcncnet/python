@@ -27,6 +27,7 @@ class Status:
                     self.father.framework.utils.service.service_write({"command": "launch:machine:error", "message": detail, "data": False})
 
                 self.father.framework.machine.info = {}
+
                 for x in dir(self.api):
                     if not x.startswith("_") and not callable(getattr(self.api, x)):
                         self.father.framework.machine.info[x] = getattr(self.api, x)
