@@ -4,6 +4,7 @@
 ******************************************************************************
 """
 
+import os
 import sys
 import signal
 from .utils import Utils
@@ -26,7 +27,12 @@ class Init:
     def start(self):
         armcnc_start = "armcnc_start"
         if armcnc_start in dir(launch_file):
-            self.armcnc.start()
+            var_name = "MACHINE_PATH"
+            if var_name in os.environ:
+                env_var = os.environ[var_name]
+                if env_var != "":
+                    self.machine.machine_path = env_var
+                    self.armcnc.start()
             getattr(launch_file, armcnc_start)(self)
         self.signal_handler(False, False)
 

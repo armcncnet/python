@@ -34,7 +34,6 @@ class Status:
 
                 if self.father.framework.machine.info["ini_filename"]:
                     inifile = linuxcnc.ini(self.father.framework.machine.info["ini_filename"])
-                    self.father.framework.machine.machine_path = self.father.framework.machine.info["ini_filename"].replace(self.father.framework.machine.workspace+"/configs/", "").replace("/machine.ini", "")
                     user_data = {
                         "user": self.father.framework.machine.user,
                         "workspace": self.father.framework.machine.workspace,
