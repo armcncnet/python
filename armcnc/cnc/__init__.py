@@ -9,6 +9,7 @@ import subprocess
 import linuxcnc
 from .status import Status
 from .command import Command
+from .hal import Hal
 from .error import Error
 
 class CNC:
@@ -17,6 +18,7 @@ class CNC:
         self.framework = framework
         self.status = Status(self)
         self.command = Command(self)
+        self.hal = Hal(self)
         self.error = Error(self)
 
     def start(self):
