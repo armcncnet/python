@@ -7,7 +7,6 @@ import copy
 import threading
 import linuxcnc
 
-
 class Status:
 
     def __init__(self, father):

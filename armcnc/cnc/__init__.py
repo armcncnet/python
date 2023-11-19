@@ -124,6 +124,6 @@ class CNC:
                 if message["data"] != "":
                     self.command.program_open(message["data"])
 
-            if message["command"] == "desktop:package:status":
+            if message["command"] == "service:package:status":
                 self.framework.package.set_status(message["data"]["package"], message["data"]["status"])
 

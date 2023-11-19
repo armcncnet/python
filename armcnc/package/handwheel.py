@@ -191,7 +191,7 @@ class HandWheel:
             joy_speed = float(self.joy_speed["Z_VELOCITY"])
         else:
             joy_speed = float(self.joy_speed["A_VELOCITY"])
-        return joy_speed / 60
+        return joy_speed
 
     def set_axis_num(self):
         axis = self.package.framework.machine.axes
