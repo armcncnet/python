@@ -25,7 +25,7 @@ class CNC:
         linuxcnc_pid = subprocess.Popen(["pidof", "-x", "linuxcnc"], stdout=subprocess.PIPE)
         linuxcnc_pid_result = linuxcnc_pid.communicate()[0]
         if len(linuxcnc_pid_result) == 0:
-            self.framework.utils.service.service_write({"command": "launch:restart", "message": "", "data": False})
+            # self.framework.utils.service.service_write({"command": "launch:restart", "message": "", "data": False})
             sys.exit()
         self.framework.machine.is_alive = True
         self.framework.utils.service.service_write({"command": "launch:restart", "message": "", "data": True})
