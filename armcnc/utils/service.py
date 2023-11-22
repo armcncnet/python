@@ -19,12 +19,7 @@ class Service:
 
     def service_work(self):
         websocket.enableTrace(False)
-        self.socket = websocket.WebSocketApp(
-            "ws://127.0.0.1:10081/message/service",
-            on_message=self.service_message,
-            on_error=self.service_error,
-            on_close=self.service_close
-        )
+        self.socket = websocket.WebSocketApp("ws://127.0.0.1:10081/message/service", on_message=self.service_message, on_error=self.service_error, on_close=self.service_close)
         self.socket.on_open = self.service_open
         self.socket.run_forever()
 
