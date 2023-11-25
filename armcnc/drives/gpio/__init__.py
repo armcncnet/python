@@ -28,7 +28,6 @@ class Init:
                 env_var = os.environ[var_name]
                 if env_var != "":
                     self.machine.machine_path = env_var
-                    print(self.machine.machine_path, self.coordinates)
                     self.base.setup()
                     while True:
                         self.base.loop()
