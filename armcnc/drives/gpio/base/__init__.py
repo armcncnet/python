@@ -14,7 +14,6 @@ class Base:
         self.father = father
         self.hal = None
         self.gpio = GPIO
-        self.estop = None
 
     def setup(self):
         if self.father.coordinates != "" and self.father.machine.machine_path != "":
@@ -22,23 +21,27 @@ class Base:
             mode = self.gpio.getmode()
             if mode != "BCM":
                 self.gpio.setmode(self.gpio.BCM)
-            estop = self.father.machine.get_user_config_value("IO", "ESTOP_PIN")
-            if estop != "":
-                self.estop = estop.split()
-                if self.estop[2] == "IN":
-                    if self.gpio.gpio_function(int(self.estop[1])) != "IN":
-                        self.gpio.setup(int(self.estop[1]), self.gpio.IN)
-                if self.estop[2] == "OUT":
-                    if self.gpio.gpio_function(int(self.estop[1])) != "OUT":
-                        self.gpio.setup(int(self.estop[1]), self.gpio.OUT)
-                self.hal.newpin(self.estop[0], hal.HAL_BIT, hal.HAL_IN)
+            pins = self.father.machine.get_user_config_items("IO")
+            for key, val in pins:
+                pin = val.split()
+                if len(pin) == 3:
+                    if pin[2] == "IN":
+                        if self.gpio.gpio_function(int(pin[1])) != "IN":
+                            self.gpio.setup(int(pin[1]), self.gpio.IN)
+                    if pin[2] == "OUT":
+                        if self.gpio.gpio_function(int(pin[1])) != "OUT":
+                            self.gpio.setup(int(pin[1]), self.gpio.OUT)
+                    self.hal.newpin(pin[0], hal.HAL_BIT, hal.HAL_IN)
             self.hal.ready()
 
     def loop(self):
         if self.hal and self.father.coordinates != "" and self.father.machine.machine_path != "":
-            if self.estop:
-                if self.hal[self.estop[0]]:
-                    estop_status = self.gpio.input(int(self.estop[1]))
-                    self.hal[self.estop[0]] = estop_status
+            pins = self.father.machine.get_user_config_items("IO")
+            for key, val in pins:
+                pin = val.split()
+                if len(pin) == 3:
+                    if pin[2] == "IN" and self.hal[pin[0]]:
+                        pin_status = self.gpio.input(int(pin[1]))
+                        self.hal[pin[0]] = pin_status
         time.sleep(0.01)
 
