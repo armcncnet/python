@@ -54,6 +54,12 @@ class Machine:
         config.read(self.workspace + "/configs/" + self.machine_path + "/machine.user")
         return config[father][value].strip()
 
+    def get_user_config_array(self, father):
+        config = configparser.ConfigParser()
+        config.read(self.workspace + "/configs/" + self.machine_path + "/machine.user")
+        items = config.items(father)
+        return items
+
     def get_user_config_items(self, father):
         configs = {}
         config = configparser.ConfigParser()
@@ -63,9 +69,3 @@ class Machine:
             key = key.upper()
             configs[key] = val.strip()
         return configs
-
-    def get_user_config_items_array(self, father):
-        config = configparser.ConfigParser()
-        config.read(self.workspace + "/configs/" + self.machine_path + "/machine.user")
-        items = config.items(father)
-        return items
