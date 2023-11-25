@@ -13,15 +13,15 @@ from .cnc import CNC
 from .machine import Machine
 try:
     import launch as launch_file
-    is_launch_file_available = True
+    launch_file_imported = True
 except ImportError:
     launch_file = None
-    is_launch_file_available = False
+    launch_file_imported = False
 
 class Init:
 
     def __init__(self):
-        if is_launch_file_available:
+        if launch_file_imported:
             signal.signal(signal.SIGINT, self.signal_handler)
             signal.signal(signal.SIGTERM, self.signal_handler)
             self.utils = Utils(self)
