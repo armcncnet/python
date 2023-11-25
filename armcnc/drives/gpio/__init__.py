@@ -37,6 +37,10 @@ class Init:
 
     def signal_handler(self, signum, frame):
         on_exit = "on_exit"
+        if self.base.hal:
+            self.base.hal.exit()
+        if self.base.gpio:
+            self.base.gpio.cleanup()
         if on_exit in dir(armcncio_file):
             getattr(armcncio_file, on_exit)(self)
         sys.exit()

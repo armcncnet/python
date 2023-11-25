@@ -26,9 +26,11 @@ class Base:
             if estop != "":
                 self.estop = estop.split()
                 if self.estop[2] == "IN":
-                    self.gpio.setup(int(self.estop[1]), self.gpio.IN)
+                    if self.gpio.gpio_function(int(self.estop[1])) != "IN":
+                        self.gpio.setup(int(self.estop[1]), self.gpio.IN)
                 if self.estop[2] == "OUT":
-                    self.gpio.setup(int(self.estop[1]), self.gpio.OUT)
+                    if self.gpio.gpio_function(int(self.estop[1])) != "OUT":
+                        self.gpio.setup(int(self.estop[1]), self.gpio.OUT)
                 self.hal.newpin(self.estop[0], hal.HAL_BIT, hal.HAL_IN)
             self.hal.ready()
 
@@ -37,5 +39,5 @@ class Base:
             if self.estop:
                 estop_status = self.gpio.input(int(self.estop[1]))
                 self.hal[self.estop[0] + "a"] = estop_status
-            time.sleep(0.01)
+        time.sleep(0.01)
 
