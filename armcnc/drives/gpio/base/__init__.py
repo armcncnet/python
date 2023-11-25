@@ -21,10 +21,9 @@ class Base:
             mode = self.gpio.getmode()
             if mode != "BCM":
                 self.gpio.setmode(self.gpio.BCM)
-            pins = self.father.machine.get_user_config_items("IO")
-            for item in pins:
-                key, val = item
-                pin = val.split()
+            pins = self.father.machine.get_user_config_items_array("IO")
+            for key, val in pins:
+                pin = val.strip().split()
                 if len(pin) == 3:
                     if pin[2] == "IN":
                         if self.gpio.gpio_function(int(pin[1])) != "IN":
@@ -37,10 +36,9 @@ class Base:
 
     def loop(self):
         if self.hal and self.father.coordinates != "" and self.father.machine.machine_path != "":
-            pins = self.father.machine.get_user_config_items("IO")
-            for item in pins:
-                key, val = item
-                pin = val.split()
+            pins = self.father.machine.get_user_config_items_array("IO")
+            for key, val in pins:
+                pin = val.strip().split()
                 if len(pin) == 3:
                     if pin[2] == "IN" and self.hal[pin[0]]:
                         pin_status = self.gpio.input(int(pin[1]))

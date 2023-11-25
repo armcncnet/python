@@ -63,3 +63,9 @@ class Machine:
             key = key.upper()
             configs[key] = val.strip()
         return configs
+
+    def get_user_config_items_array(self, father):
+        config = configparser.ConfigParser()
+        config.read(self.workspace + "/configs/" + self.machine_path + "/machine.user")
+        items = config.items(father)
+        return items
