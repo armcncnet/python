@@ -7,7 +7,7 @@
 import os
 import sys
 import signal
-from base import Base
+from .base import Base
 from ...machine import Machine
 import armcncio as armcncio_file
 

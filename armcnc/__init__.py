@@ -11,18 +11,24 @@ from .utils import Utils
 from .package import Package
 from .cnc import CNC
 from .machine import Machine
-import launch as launch_file
+try:
+    import launch as launch_file
+    is_launch_file_available = True
+except ImportError:
+    launch_file = None
+    is_launch_file_available = False
 
 class Init:
 
     def __init__(self):
-        signal.signal(signal.SIGINT, self.signal_handler)
-        signal.signal(signal.SIGTERM, self.signal_handler)
-        self.utils = Utils(self)
-        self.machine = Machine(self)
-        self.armcnc = CNC(self)
-        self.package = Package(self)
-        self.start()
+        if is_launch_file_available:
+            signal.signal(signal.SIGINT, self.signal_handler)
+            signal.signal(signal.SIGTERM, self.signal_handler)
+            self.utils = Utils(self)
+            self.machine = Machine(self)
+            self.armcnc = CNC(self)
+            self.package = Package(self)
+            self.start()
 
     def start(self):
         armcnc_start = "armcnc_start"
