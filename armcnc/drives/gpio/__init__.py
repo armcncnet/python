@@ -31,7 +31,7 @@ class Init:
                     env_var = os.environ[var_name]
                     if env_var != "":
                         self.machine.machine_path = env_var
-                        print(self.machine.machine_path)
+                        print(self.machine.machine_path, self.coordinates)
                 getattr(armcncio_file, on_start)(self)
             self.signal_handler(False, False)
 

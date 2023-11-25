@@ -14,15 +14,28 @@ class Base:
         self.father = father
         self.hal = None
         self.gpio = GPIO
+        self.estop = None
 
     def setup(self):
         if self.father.coordinates != "" and self.father.machine.machine_path != "":
-            self.gpio.setmode(GPIO.BCM)
             self.hal = hal.component("armcncio")
-            self.hal.newpin("gpio.estop", hal.HAL_BIT, hal.HAL_IN)
+            mode = self.gpio.getmode()
+            if mode != "BCM":
+                self.gpio.setmode(self.gpio.BCM)
+            estop = self.father.machine.get_user_config_value("IO", "ESTOP_PIN")
+            if estop != "":
+                self.estop = estop.split()
+                if self.estop[2] == "IN":
+                    self.gpio.setup(int(self.estop[1]), self.gpio.IN)
+                if self.estop[2] == "OUT":
+                    self.gpio.setup(int(self.estop[1]), self.gpio.OUT)
+                self.hal.newpin(self.estop[0], hal.HAL_BIT, hal.HAL_IN)
             self.hal.ready()
 
     def loop(self):
         if self.hal and self.father.coordinates != "" and self.father.machine.machine_path != "":
+            if self.estop:
+                estop_status = self.gpio.input(int(self.estop[1]))
+                self.hal[self.estop[0] + "a"] = estop_status
             time.sleep(0.01)
 
