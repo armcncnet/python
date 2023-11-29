@@ -121,4 +121,4 @@ class Status:
                     self.father.framework.machine.info["user_data"] = user_data
 
                     self.father.framework.utils.service.service_write({"command": "launch:machine:info", "message": "", "data": self.father.framework.machine.info})
-            self.father.framework.utils.set_sleep(0.02)
+            self.father.framework.utils.set_sleep(0.05)
