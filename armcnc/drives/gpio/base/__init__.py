@@ -55,4 +55,4 @@ class Base:
             if self.x_home:
                 x_home_status = self.gpio.input(int(self.x_home[1]))
                 self.hal[self.x_home[0]] = x_home_status
-        time.sleep(0.01)
+        time.sleep(0.005)
