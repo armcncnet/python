@@ -87,8 +87,8 @@ class Status:
                         axis_name = user_data["axes"][i]
                         axis_num = self.father.framework.machine.get_axis_num(axis_name)
                         axis = actual_position[axis_num] - g5x_offset_tmp[axis_num] - self.father.framework.machine.info["tool_offset"][axis_num]
-                        if self.father.framework.machine.info["joint"][axis_num]["homing"] == 1:
-                            axis = self.father.framework.machine.info["joint_actual_position"][axis_num] - g5x_offset_tmp[axis_num] - self.father.framework.machine.info["tool_offset"][axis_num]
+                        #if self.father.framework.machine.info["joint"][axis_num]["homing"] == 1:
+                        #    axis = self.father.framework.machine.info["joint_actual_position"][axis_num] - g5x_offset_tmp[axis_num] - self.father.framework.machine.info["tool_offset"][axis_num]
                         axis -= g92_offset_tmp[axis_num]
                         axis = "{:.3f}".format(axis)
                         user_data["data"]["position"][i] = axis
