@@ -114,20 +114,32 @@ class Base:
                 self.hal[self.estop[0]] = estop_status
             if self.x_home:
                 x_home_status = self.gpio.input(int(self.x_home[1]))
+                if len(self.x_home) == 4 and self.x_home[3] == "NOT":
+                    x_home_status = not x_home_status
                 self.hal[self.x_home[0]] = x_home_status
             if self.y_home:
                 y_home_status = self.gpio.input(int(self.y_home[1]))
+                if len(self.y_home) == 4 and self.y_home[3] == "NOT":
+                    y_home_status = not y_home_status
                 self.hal[self.y_home[0]] = y_home_status
             if self.z_home:
                 z_home_status = self.gpio.input(int(self.z_home[1]))
+                if len(self.z_home) == 4 and self.z_home[3] == "NOT":
+                    z_home_status = not z_home_status
                 self.hal[self.z_home[0]] = z_home_status
             if self.a_home:
                 a_home_status = self.gpio.input(int(self.a_home[1]))
+                if len(self.a_home) == 4 and self.a_home[3] == "NOT":
+                    a_home_status = not a_home_status
                 self.hal[self.a_home[0]] = a_home_status
             if self.b_home:
                 b_home_status = self.gpio.input(int(self.b_home[1]))
+                if len(self.b_home) == 4 and self.b_home[3] == "NOT":
+                    b_home_status = not b_home_status
                 self.hal[self.b_home[0]] = b_home_status
             if self.c_home:
                 c_home_status = self.gpio.input(int(self.c_home[1]))
+                if len(self.c_home) == 4 and self.c_home[3] == "NOT":
+                    c_home_status = not c_home_status
                 self.hal[self.c_home[0]] = c_home_status
         time.sleep(0.002)

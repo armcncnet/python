@@ -36,6 +36,7 @@ class Command:
         return True
 
     def set_teleop_enable(self, value):
+        # 1:teleop, 0: joint
         self.father.status.api.poll()
         self.api.teleop_enable(value)
         self.api.wait_complete()
@@ -160,14 +161,11 @@ class Command:
 
     def home_all(self):
         self.set_teleop_enable(0)
-        self.home_axis(2)
-        for x in range(len(self.father.framework.machine.axes) - 1, -1, -1):
-            if x == 2:
-                continue
-            self.home_axis(x)
+        self.api.home(-1)
+        self.api.wait_complete()
 
     def home_axis(self, axis):
-        self.set_teleop_enable_mode(0)
+        self.set_teleop_enable(0)
         self.api.home(axis)
         self.api.wait_complete()
 
