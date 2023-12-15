@@ -122,20 +122,51 @@ class Command:
             mode = self.get_jog_mode()
         self.api.jog(linuxcnc.JOG_STOP, mode, int(axis))
 
-    def set_spindle(self, value):
+    def set_spindle_on(self):
         if self.is_manual():
             return
         self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
-        if value == 1:
-            self.api.spindle(linuxcnc.SPINDLE_FORWARD, 0)
-        if value == 2:
-            self.api.spindle(linuxcnc.SPINDLE_REVERSE, 0)
-        if value == 3:
-            self.api.spindle(linuxcnc.SPINDLE_INCREASE)
-        if value == 4:
-            self.api.spindle(linuxcnc.SPINDLE_DECREASE)
-        if value == 5:
-            self.api.spindle(linuxcnc.SPINDLE_OFF)
+        self.api.spindle(linuxcnc.SPINDLE_ON)
+
+    def set_spindle_forward(self):
+        if self.is_manual():
+            return
+        self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
+        self.api.spindle(linuxcnc.SPINDLE_FORWARD, 1)
+
+    def set_spindle_reverse(self):
+        if self.is_manual():
+            return
+        self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
+        self.api.spindle(linuxcnc.SPINDLE_REVERSE, 1)
+
+    def set_spindle_faster(self):
+        if self.is_manual():
+            return
+        self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
+        self.api.spindle(linuxcnc.SPINDLE_INCREASE)
+
+    def set_spindle_slower(self):
+        if self.is_manual():
+            return
+        self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
+        self.api.spindle(linuxcnc.SPINDLE_DECREASE)
+
+    def set_spindle_off(self):
+        if self.is_manual():
+            return
+        self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
+        self.api.spindle(linuxcnc.SPINDLE_OFF)
+
+    def set_spindle_speed(self, speed):
+        self.father.status.api.poll()
+        if self.is_manual():
+            return
+        self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
+        if self.father.framework.machine.info["spindle"][0]["direction"] == 1:
+            self.api.spindle(linuxcnc.SPINDLE_FORWARD, speed)
+        if self.father.framework.machine.info["spindle"][0]["direction"] == -1:
+            self.api.spindle(linuxcnc.SPINDLE_REVERSE, speed)
 
     def set_spindle_override(self, value):
         value = int(value) / 100.0
