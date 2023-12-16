@@ -96,12 +96,13 @@ class CNC:
 
             if message["command"] == "desktop:control:spindle":
                 value = message["data"]["value"]
+                speed = message["data"]["speed"]
                 if value == "on":
-                    self.command.set_spindle_on()
+                    self.command.set_spindle_on(speed)
                 if value == "forward":
-                    self.command.set_spindle_forward()
+                    self.command.set_spindle_forward(speed)
                 if value == "reverse":
-                    self.command.set_spindle_reverse()
+                    self.command.set_spindle_reverse(speed)
                 if value == "faster":
                     self.command.set_spindle_faster()
                 if value == "slower":
@@ -109,7 +110,7 @@ class CNC:
                 if value == "off":
                     self.command.set_spindle_off()
                 if value == "speed":
-                    self.command.set_spindle_speed(message["data"]["speed"])
+                    self.command.set_spindle_speed(speed)
 
             if message["command"] == "desktop:control:spindle:override":
                 value = message["data"]["value"]

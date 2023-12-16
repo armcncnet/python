@@ -56,7 +56,8 @@ class Status:
                         "spindle": {
                             "enabled": self.father.framework.machine.info["spindle"][0]["enabled"],
                             "direction": self.father.framework.machine.info["spindle"][0]["direction"],
-                            "velocity": self.father.framework.machine.info["spindle"][0]["speed"],
+                            "speed": self.father.framework.machine.info["spindle"][0]["speed"],
+                            "default_speed": int(self.father.framework.machine.get_user_config_value("SPINDLE", "DEFAULT_SPINDLE_SPEED") or 1200),
                             "min_velocity": int(inifile.find("SPINDLE_0", "MIN_FORWARD_VELOCITY") or 0),
                             "max_velocity": int(inifile.find("SPINDLE_0", "MAX_FORWARD_VELOCITY") or 24000),
                             "min_override": float(inifile.find("DISPLAY", "MIN_SPINDLE_OVERRIDE")),

@@ -23,6 +23,10 @@ class Command:
             self.set_mode(linuxcnc.MODE_MDI, 0.5)
             self.api.mdi(command)
 
+    def get_mode(self):
+        self.father.status.api.poll()
+        return self.father.status.api.task_mode
+
     def set_mode(self, m, t, *p):
         self.father.status.api.poll()
         if self.father.status.api.task_mode == m or self.father.status.api.task_mode in p:
@@ -122,51 +126,44 @@ class Command:
             mode = self.get_jog_mode()
         self.api.jog(linuxcnc.JOG_STOP, mode, int(axis))
 
-    def set_spindle_on(self):
-        if self.is_manual():
-            return
-        self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
-        self.api.spindle(linuxcnc.SPINDLE_ON)
+    def set_spindle_on(self, speed):
+        self.set_spindle_speed(speed)
 
-    def set_spindle_forward(self):
-        if self.is_manual():
-            return
+    def set_spindle_forward(self, speed):
         self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
-        self.api.spindle(linuxcnc.SPINDLE_FORWARD, 1)
+        self.api.spindle(linuxcnc.SPINDLE_FORWARD, speed)
 
-    def set_spindle_reverse(self):
-        if self.is_manual():
-            return
+    def set_spindle_reverse(self, speed):
         self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
-        self.api.spindle(linuxcnc.SPINDLE_REVERSE, 1)
+        speed = self.is_spindle_running()
+        self.api.spindle(linuxcnc.SPINDLE_REVERSE, speed)
 
     def set_spindle_faster(self):
-        if self.is_manual():
-            return
         self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
-        self.api.spindle(linuxcnc.SPINDLE_INCREASE)
+        self.api.spindle(0, linuxcnc.SPINDLE_INCREASE)
 
     def set_spindle_slower(self):
-        if self.is_manual():
-            return
         self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
-        self.api.spindle(linuxcnc.SPINDLE_DECREASE)
+        self.api.spindle(0, linuxcnc.SPINDLE_DECREASE)
 
     def set_spindle_off(self):
-        if self.is_manual():
-            return
         self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
         self.api.spindle(linuxcnc.SPINDLE_OFF)
 
     def set_spindle_speed(self, speed):
         self.father.status.api.poll()
-        if self.is_manual():
-            return
         self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
-        if self.father.framework.machine.info["spindle"][0]["direction"] == 1:
+        if self.father.status.api.spindle[0]["direction"] == 1:
             self.api.spindle(linuxcnc.SPINDLE_FORWARD, speed)
-        if self.father.framework.machine.info["spindle"][0]["direction"] == -1:
+        if self.father.status.api.spindle[0]["direction"] == -1:
             self.api.spindle(linuxcnc.SPINDLE_REVERSE, speed)
+
+    def is_spindle_running(self):
+        self.father.status.api.poll()
+        if self.father.status.api.spindle[0]["enabled"]:
+            return self.father.status.api.spindle[0]["speed"]
+        else:
+            return 0
 
     def set_spindle_override(self, value):
         value = int(value) / 100.0
