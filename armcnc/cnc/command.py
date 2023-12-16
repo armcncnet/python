@@ -135,7 +135,6 @@ class Command:
 
     def set_spindle_reverse(self, speed):
         self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
-        speed = self.is_spindle_running()
         self.api.spindle(linuxcnc.SPINDLE_REVERSE, speed)
 
     def set_spindle_faster(self):
