@@ -152,7 +152,7 @@ class Command:
     def set_spindle_speed(self, speed):
         self.father.status.api.poll()
         self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
-        if self.father.status.api.spindle[0]["direction"] == 1:
+        if self.father.status.api.spindle[0]["direction"] == 1 or self.father.status.api.spindle[0]["direction"] == 0:
             self.api.spindle(linuxcnc.SPINDLE_FORWARD, speed)
         if self.father.status.api.spindle[0]["direction"] == -1:
             self.api.spindle(linuxcnc.SPINDLE_REVERSE, speed)
