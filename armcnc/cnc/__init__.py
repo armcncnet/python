@@ -135,6 +135,10 @@ class CNC:
                         self.command.api.state(linuxcnc.STATE_ON)
                 self.command.api.wait_complete(0.5)
 
+            if message["command"] == "desktop:control:mdi":
+                value = message["data"]["value"]
+                self.command.set_mdi(value)
+
             if message["command"] == "desktop:program:open":
                 if message["data"] != "":
                     self.command.program_open(message["data"])
