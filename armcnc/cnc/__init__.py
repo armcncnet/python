@@ -137,7 +137,8 @@ class CNC:
 
             if message["command"] == "desktop:control:mdi":
                 value = message["data"]["value"]
-                self.command.set_mdi(value)
+                if value != "":
+                    self.command.set_mdi(value)
 
             if message["command"] == "desktop:program:open":
                 if message["data"] != "":
