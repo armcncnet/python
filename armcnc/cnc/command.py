@@ -111,7 +111,7 @@ class Command:
             if mode == "":
                 mode = self.get_jog_mode()
             self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
-            self.api.jog(linuxcnc.JOG_CONTINUOUS, mode, int(axis), int(speed))
+            self.api.jog(linuxcnc.JOG_CONTINUOUS, mode, int(axis), speed)
 
     def jog_increment(self, axis, speed, increment, mode):
         if self.father.framework.machine.task_state:
@@ -119,7 +119,7 @@ class Command:
                 mode = self.get_jog_mode()
             increment = float(increment)
             self.set_mode(linuxcnc.MODE_MANUAL, 0.5)
-            self.api.jog(linuxcnc.JOG_INCREMENT, mode, int(axis), int(speed), increment)
+            self.api.jog(linuxcnc.JOG_INCREMENT, mode, int(axis), speed, increment)
 
     def jog_stop(self, axis, mode):
         if mode == "":
